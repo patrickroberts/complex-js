@@ -76,7 +76,7 @@ cannot parse the function correctly. Below is an example
 for using the parser:
 
 function readUserInput(inputElement) // e.g. a pointer to something like
-									 //	<input type="text" value="5*e^(pi*i)">
+                                     // <input type="text" value="5*e^(pi*i)">
 {	var str = Complex.parseFunction(inputElement.value.toLowerCase(),true,0);
 	/* this would also work:
 	var str = parseFunction(inputElement.value.toLowerCase(),true,0);

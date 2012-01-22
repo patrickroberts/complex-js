@@ -1,0 +1,90 @@
+GENERAL SUMMARY
+This project is designed for the general use of complex math.
+It contains most, if not all the necessary functions that are
+commonly used in complex mathematics. If there s a function
+that is missing, feel free to fork the project and make a pull
+request with your additions. Also, I am aware that this project
+is not error free. For extreme conditions, handling the calculations
+as the input tends to infinity or zero can be problematic. In
+addition, there are a few functions which I am not certain are
+correctly implemented. If you find an error in one of the functions,
+please report the issue and in the notes provide the correct
+complex formula. Lastly, note that the original purpose of this
+library was for use in a fractal rendering program.
+
+DIRECTIONS
+To include this library in your program, simply use the following
+HTML command:
+
+<script type="text/javascript" src="Complex.js"></script>
+
+After including that in the head, your program should be able
+to use complex math quite easily (assuming that Complex.js is in
+the same directory as your program).
+
+-CREATING A NEW COMPLEX NUMBER
+Simply use the Javascript command:
+
+var foo = new Complex(0,0);
+
+...and that should create the Complex zero. Note that the following
+does NOT do the same thing:
+
+var foo = new Number(0);
+
+This will NOT be able to be manipulated by the Complex library,
+excluding the function "Complex.prototype.pow" which requires
+a Number as the argument.
+
+You may also declare a Complex by its polar coordinates through
+the following function:
+
+var foo = Complex.polar(1,Math.PI/2);
+
+This creates the Complex imaginary unit. Note that the declaration
+omits the "new." This is because Complex.polar returns a
+new Complex internally.
+
+-FUNCTIONS VS OPERATORS
+There are two main categories of mathematical manipulations in
+this library, as noted by the name of this section. Functions
+are a manipulation that require a single input variable, such
+as:
+
+var tanFoo = Complex.tan(foo);
+var sqrtFoo = Complex.sqrt(foo);
+var conjFoo = Complex.conj(foo);
+
+There are many others, but to tell them apart, there is a
+differece. They follow the prefix "Complex." rather than
+"Complex.prototype." Operators are the opposite, and they
+require two input variables, one variable is the call function
+and the other is the argument. The following shows how to use
+an operator:
+
+var twoFoo = foo.add(foo);
+
+Again, there are a few more, but they follow the same general
+standards.
+
+-OVERWRITING
+A key element of this library is that there are no functions
+that overwrite current Complexes with new values. This is to
+prevent accidental loss of the constants e, pi, i, and 1.
+Another reason this may have become the way it is, is because
+its original purpose was to create fractals, which require
+keeping track of many pseudo-constants, and would have been
+much more difficult to write if one requirement was constantly
+calling "foo.copy()" or "Complex.copy(foo)" to prevent it from
+being overwritten. If you do not agree with this feature,
+you should find another library, because this is never going
+to be changed.
+
+-CONCLUSION
+If you have gotten this far, congratulations. You have finished
+the tutorial for this library and are now prepared to use it
+in your program. There is a parser that will be added to the
+library soon, and it should take user input and convert it to
+Javascript code, storing the code in a function called
+"Complex.iterate." It will have a feature for optional variables
+as well, so that the user can specify variables in the expression.

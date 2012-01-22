@@ -26,6 +26,8 @@ the same directory as your program).
 Simply use the Javascript command:
 
 var foo = new Complex(0,0);
+// OR
+var foo = Complex(0,0);
 
 ...and that should create the Complex zero. Note that the following
 does NOT do the same thing:

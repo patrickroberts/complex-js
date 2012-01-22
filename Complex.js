@@ -21,11 +21,15 @@ Math.cosh = function(x)
 //		 two arguments blank, unless they
 //		 have been accurately calculated.
 function Complex(r,i,m,t)
-{	this.r = m==undefined?Math.sqrt(r*r+i*i):m;
-	this.t = t==undefined?Math.atan2(i,r):t;
-	this.re= r;
-	this.i = i;
-}
+{	if(this instanceof Complex)
+	{	this.r = m==undefined?Math.sqrt(r*r+i*i):m;
+		this.t = t==undefined?Math.atan2(i,r):t;
+		this.re= r;
+		this.i = i;
+	}
+	else
+	{	return new Complex(r,i,m,t);
+}	}
 
 // Constants
 Complex["1"] = new Complex(1,0,1,0);

@@ -69,6 +69,40 @@ var twoFoo = foo.add(foo);
 Again, there are a few more, but they follow the same general
 standards.
 
+-PARSING USER INPUT
+The library includes a function for parsing a mathematical
+expression (generally user input) and silently fails if it
+cannot parse the function correctly. Below is an example
+for using the parser:
+
+function readUserInput(inputElement) // e.g. a pointer to something like
+									 //	<input type="text" value="5*e^(pi*i)">
+{	var str = Complex.parseFunction(inputElement.value.toLowerCase(),true,0);
+	/* this would also work:
+	var str = parseFunction(inputElement.value.toLowerCase(),true,0);
+	return (new Function("",str))();
+	// or you could store the newly parsed expression in an
+	// identified function
+	Complex.result = new Function("",str);
+	// yes, I am aware that this particular function will ignore the last line
+}
+
+Now wouldn't it be handy if it could parse with identifiable variables
+as input to the expression? Well it can. Here's an example:
+
+function readUserInput(inputElement)
+{	var str = Complex.parseFunction(inputElement.value.toLowerCase(),true,0,
+									["x","y","z"]);
+	Complex.multivarFunction = new Function("x,y,z",str);
+}
+
+Now that you have the function set up, here's how you could call it:
+
+var result = Complex.multivarFunction(Complex(3,4),Complex(0,5),Complex(-1,2));
+console.log(result);
+
+So now you can make a complex math calculator quite easily with this library!
+
 -OVERWRITING
 A key element of this library is that there are no functions
 that overwrite current Complexes with new values. This is to

@@ -43,7 +43,8 @@ Complex.prototype.toString = function(type)
 
 // Exponent function
 Complex.exp = function(c)
-{	return c.i==0?e.pow(c.re):e.cPow(c);
+{	var e = Complex.E;
+	return c.i==0?e.pow(c.re):e.cPow(c);
 }
 
 // Polar constructor for Complex class

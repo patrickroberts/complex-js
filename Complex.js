@@ -49,7 +49,7 @@ Complex.prototype.toString = function(type)
 // Exponent function
 Complex.exp = function(c)
 {	var e = Complex.E;
-	return c.i==0?e.pow(c.re):e.cPow(c);
+	return c.i==0?e.pow(c.re):Complex.polar(Math.exp(c.re),c.i);
 }
 
 // Polar constructor for Complex class
@@ -120,18 +120,19 @@ Complex.prototype.cPow = function(c)
 
 // Cosine function
 Complex.cos = function(c)
-{	return new Complex(0.5*Math.cos(c.re)*(Math.exp(-c.i)+Math.exp(c.i)),0.5*Math.sin(c.re)*(Math.exp(-c.i)-Math.exp(c.i)));
+{	var i = Complex.I;
+	return Complex.exp(i.mult(c)).add(Complex.exp(Complex.neg(i).mult(c))).divBy(new Complex(2,0,2,0));
 }
 
 // Sine function
 Complex.sin = function(c)
-{	return new Complex(0.5*Math.sin(c.re)*(Math.exp(-c.i)+Math.exp(c.i)),0.5*Math.cos(c.re)*(Math.exp(c.i)-Math.exp(-c.i)));
+{	var i = Complex.I;
+	return Complex.exp(i.mult(c)).sub(Complex.exp(Complex.neg(i).mult(c))).divBy(new Complex(0,2,2,0));
 }
 
 // Tangent function
 Complex.tan = function(c)
-{	var d = Math.cos(2*c.re)+Math.cosh(2*c.i);
-	return new Complex(Math.sin(2*c.re)/d,Math.sinh(2*c.i)/d);
+{	return Complex.sin(c).divBy(Complex.cos(c));
 }
 
 // Secant function
@@ -157,13 +158,13 @@ Complex.log = function(c)
 // Inverse Sine function
 Complex.arcsin = function(c)
 {	var i = Complex.I
-	return Complex.neg(i).mult(Complex.log(i.mult(c).add(Complex["1"].sub(c.pow(2)).pow(0.5))));
+	return i.mult(Complex.log(Complex["1"].sub(c.pow(2)).pow(0.5).sub(i.mult(c))));
 }
 
 // Inverse Cosine function
 Complex.arccos = function(c)
 {	var i = Complex.I;
-	return Complex.neg(i).mult(Complex.log(c.add(c.pow(2).sub(Complex["1"]).pow(0.5))));
+	return i.mult(Complex.log(i.mult(Complex["1"].sub(c.pow(2)).pow(0.5)).sub(c)));
 }
 
 // Inverse Tangent function
@@ -175,68 +176,64 @@ Complex.arctan = function(c)
 // Inverse Secant function
 Complex.arcsec = function(c)
 {	var i = Complex.I;
-	return Complex.neg(i).mult(Complex.log(c.pow(-1).add(Complex["1"].sub(i.divBy(c.pow(2))).pow(0.5))));
+	return Complex.arccos(c.pow(-1));
 }
 
 // Inverse Cosecant function
 Complex.arccsc = function(c)
 {	var i = Complex.I;
-	return Complex.neg(i).mult(Complex.log(i.divBy(c).add(new Complex(1,0,1,0).sub(new Complex(1,0,1,0).divBy(c.pow(2))).pow(0.5))));
+	return Complex.arcsin(c.pow(-1));
 }
 
 // Inverse Cotangent function
 Complex.arccot = function(c)
 {	var i = Complex.I;
-	return i.mult(Complex.log(c.sub(i).divBy(c.add(i)))).divBy(new Complex(2,0,2,0));
+	return i.mult(Complex.log(c.add(i).divBy(c.sub(i)))).divBy(new Complex(2,0,2,0));
 }
 
 // Hyperbolic Sine function
 Complex.sinh = function(c)
-{	return new Complex(Math.cos(c.r*Math.sin(c.t))*Math.sinh(c.r*Math.cos(c.t)),Math.sin(c.r*Math.sin(c.t))*Math.cosh(c.r*Math.cos(c.t)));
+{	return Complex.exp(c).sub(exp(Complex.neg(z))).divBy(new Complex(2,0,2,0));
 }
 
 // Hyperbolic Cosine function
 Complex.cosh = function(c)
-{	return new Complex(Math.cos(c.r*Math.sin(c.t))*Math.cosh(c.r*Math.cos(c.t)),Math.sin(c.r*Math.sin(c.t))*Math.sinh(c.r*Math.cos(c.t)));
+{	return Complex.exp(c).add(exp(Complex.neg(z))).divBy(new Complex(2,0,2,0));
 }
 
 // Hyperbolic Tangent function
 Complex.tanh = function(c)
-{	var d = Math.cos(2*c.r*Math.sin(c.t))+Math.cosh(2*c.r*Math.cos(c.t));
-	return new Complex(Math.sinh(2*c.r*Math.cos(c.t))/d,Math.sin(2*c.r*Math.sin(c.t))/d);
+{	return Complex.sinh(c).divBy(Complex.cosh(c));
 }
 
 // Hyperbolic Cosecant function
 Complex.csch = function(c)
-{	var d = Math.cos(2*c.r*Math.sin(c.t))-Math.cosh(2*c.r*Math.cos(c.t));
-	return new Complex(-2*Math.cos(c.r*Math.sin(c.t))*Math.sinh(c.r*Math.cos(c.t))/d,2*Math.sin(c.r*Math.sin(c.t))*Math.cosh(c.r*Math.cos(c.t))/d);
+{	Complex.sinh(c).pow(-1);
 }
 
 // Hyperbolic Secant function
 Complex.sech = function(c)
-{	var d = Math.cos(2*c.r*Math.sin(c.t))+Math.cosh(2*c.r*Math.cos(c.t));
-	return new Complex(2*Math.cos(c.r*Math.sin(c.t))*Math.cosh(c.r*Math.cos(c.t))/d,-2*Math.sin(c.r*Math.sin(c.t))*Math.sinh(c.r*Math.cos(c.t))/d);
+{	Complex.cosh(c).pow(-1);
 }
 
 // Hyperbolic Cotangent function
 Complex.coth = function(c)
-{	var d = Math.cos(2*c.r*Math.sin(c.t))-Math.cosh(2*c.r*Math.cos(c.t));
-	return new Complex(-Math.sinh(2*c.r*Math.cos(c.t))/d,Math.sin(2*c.r*Math.sin(c.t))/d);
+{	Complex.tanh(c).pow(-1);
 }
 
 // Inverse Hyperbolic Sine function
 Complex.arcsinh = function(c)
-{	return Complex.log(c.sub(Complex.sqrt(Complex["1"].add(c.pow(2)))));
+{	return Complex.log(c.add(Complex.sqrt(c.pow(2).add(Complex["1"]))));
 }
 
 // Inverse Hyperbolic Cosine function
 Complex.arccosh = function(c)
-{	return Complex.log(c.sub(Complex.sqrt(c.pow(2).sub(Complex["1"]))));
+{	return Complex.log(c.add(Complex.sqrt(c.pow(2).sub(Complex["1"]))));
 }
 
 // Inverse Hyperbolic Tangent function
 Complex.arctanh = function(c)
-{	return Complex.I.mult(Complex.tan(new Complex(Math.E,0,Math.E,0).mult(new Complex(c.r,0,Math.abs(c.r),0)).mult(new Complex(c.t,0,c.t,0))));
+{	Complex.log(Complex["1"].add(c).divBy(Complex["1"].sub(c))).divBy(new Complex(2,0,2,0));
 }
 
 // Inverse Hyperbolic Secant function

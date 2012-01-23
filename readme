@@ -89,7 +89,7 @@ as input to the expression? Well it can. Here's an example:
 
 function readUserInput(inputElement)
 {	var str = Complex.parseFunction(inputElement.value.toLowerCase(),true,0,
-									["x","y","z"]);
+                                   ["x","y","z"]);
 	Complex.multivarFunction = new Function("x,y,z",str);
 }
 

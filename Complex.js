@@ -298,6 +298,12 @@ Complex.fPart = function(c)
 	return new Complex(re,i);
 }
 
+// Modulus operator
+// Returns the modulus of each component separately
+Complex.prototype.mod = function(c)
+{	return new Complex(this.re%c.re,this.i%c.i);
+}
+
 // Locates the index of the next addition or subtraction
 // operator that is not nested within another function
 String.prototype.nextAddSub = function(i)
@@ -384,7 +390,7 @@ Complex.parseFunction = function parseFunction(str,closeParen,last,config)
 					"re(","im(","abs(","arg(","int(","floor(","ceil(","round(",
 					"fpart(","ipart(","sqrt(","arcsinh(","arccosh(","arctanh(",
 					"arcsech(","arccsch(","arccoth("];
-	var operators = ["+","-","*","/","^"," "];
+	var operators = ["+","-","*","/","^"," ","%"];
 	var digits = ["0","1","2","3","4","5","6","7","8","9","."];
 	var close= ")";
 	var fStr = closeParen?"var i=Complex.I;var e=Complex.E;var pi=Complex.PI;return ":"";
@@ -554,6 +560,10 @@ Complex.parseFunction = function parseFunction(str,closeParen,last,config)
 					case 5:
 						temp = parseFunction(str.substring(i,Math.min(str.nextMultDiv(i),str.nextAddSub(i))),false,1,config);
 						fStr+=".mult(";
+						break;
+					case 6:
+						temp = parseFunction(str.substring(i,Math.min(str.nextMultDiv(i),str.nextAddSub(i))),false,1,config);
+						fStr+=".mod(";
 						break;
 				}
 				fStr+=temp[0]+")"

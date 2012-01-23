@@ -127,7 +127,7 @@ Complex.cos = function(c)
 // Sine function
 Complex.sin = function(c)
 {	var i = Complex.I;
-	return Complex.exp(i.mult(c)).sub(Complex.exp(Complex.neg(i).mult(c))).divBy(new Complex(0,2,2,0));
+	return Complex.exp(i.mult(c)).sub(Complex.exp(Complex.neg(i).mult(c))).divBy(new Complex(0,2,2,Math.PI/2));
 }
 
 // Tangent function

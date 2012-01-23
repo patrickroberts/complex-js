@@ -193,12 +193,12 @@ Complex.arccot = function(c)
 
 // Hyperbolic Sine function
 Complex.sinh = function(c)
-{	return Complex.exp(c).sub(exp(Complex.neg(z))).divBy(new Complex(2,0,2,0));
+{	return Complex.exp(c).sub(Complex.exp(Complex.neg(c))).divBy(new Complex(2,0,2,0));
 }
 
 // Hyperbolic Cosine function
 Complex.cosh = function(c)
-{	return Complex.exp(c).add(exp(Complex.neg(z))).divBy(new Complex(2,0,2,0));
+{	return Complex.exp(c).add(Complex.exp(Complex.neg(c))).divBy(new Complex(2,0,2,0));
 }
 
 // Hyperbolic Tangent function

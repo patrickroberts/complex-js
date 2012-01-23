@@ -5,12 +5,9 @@ commonly used in complex mathematics. If there s a function
 that is missing, feel free to fork the project and make a pull
 request with your additions. Also, I am aware that this project
 is not error free. For extreme conditions, handling the calculations
-as the input tends to infinity or zero can be problematic. In
-addition, there are a few functions which I am not certain are
-correctly implemented. If you find an error in one of the functions,
-please report the issue and in the notes provide the correct
-complex formula. Lastly, note that the original purpose of this
-library was for use in a fractal rendering program.
+as the input tends to infinity or zero can be problematic. Lastly,
+note that the original purpose of this library was for use in a
+fractal rendering program.
 
 DIRECTIONS
 To include this library in your program, simply use the following

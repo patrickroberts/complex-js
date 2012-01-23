@@ -208,17 +208,17 @@ Complex.tanh = function(c)
 
 // Hyperbolic Cosecant function
 Complex.csch = function(c)
-{	Complex.sinh(c).pow(-1);
+{	return Complex.sinh(c).pow(-1);
 }
 
 // Hyperbolic Secant function
 Complex.sech = function(c)
-{	Complex.cosh(c).pow(-1);
+{	return Complex.cosh(c).pow(-1);
 }
 
 // Hyperbolic Cotangent function
 Complex.coth = function(c)
-{	Complex.tanh(c).pow(-1);
+{	return Complex.tanh(c).pow(-1);
 }
 
 // Inverse Hyperbolic Sine function
@@ -233,7 +233,7 @@ Complex.arccosh = function(c)
 
 // Inverse Hyperbolic Tangent function
 Complex.arctanh = function(c)
-{	Complex.log(Complex["1"].add(c).divBy(Complex["1"].sub(c))).divBy(new Complex(2,0,2,0));
+{	return Complex.log(Complex["1"].add(c).divBy(Complex["1"].sub(c))).divBy(new Complex(2,0,2,0));
 }
 
 // Inverse Hyperbolic Secant function

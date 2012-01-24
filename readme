@@ -79,8 +79,8 @@ var conjFoo = Complex.conj(foo);
 There are many others, but to tell them apart, there is a
 differece. They follow the prefix "Complex." rather than
 "Complex.prototype." Operators are the opposite, and they
-require two input variables, one variable is the call function
-and the other is the argument. The following shows how to use
+require two input variables, one variable is the caller and
+the other is the argument. The following shows how to use
 an operator:
 
 var twoFoo = foo.add(foo);
@@ -111,7 +111,7 @@ as input to the expression? Well it can. Here's an example:
 
 function readUserInput(inputElement)
 {	var str = Complex.parseFunction(inputElement.value.toLowerCase(),true,0,
-                                   ["x","y","z"]);
+	                               ["x","y","z"]);
 	Complex.multivarFunction = new Function("x,y,z",str);
 }
 
@@ -138,8 +138,4 @@ to be changed.
 -CONCLUSION
 If you have gotten this far, congratulations. You have finished
 the tutorial for this library and are now prepared to use it
-in your program. There is a parser that will be added to the
-library soon, and it should take user input and convert it to
-Javascript code, storing the code in a function called
-"Complex.iterate." It will have a feature for optional variables
-as well, so that the user can specify variables in the expression.
+in your program.

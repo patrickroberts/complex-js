@@ -1,7 +1,5 @@
 # Complex.js
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
 Complex.js is a lightweight module that enables Complex mathematics
 in JavaScript. It comes with every elementary function and all
 mathematical operators. It also includes many utility functions and
@@ -18,8 +16,6 @@ the section [`Parsing Human-Readable Expressions`](#parsing).
 Although originally written for use in the browser, it can also now
 be used within [Node.js](http://nodejs.org).
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
 ## Overview
 
 * [Download](#download)
@@ -33,7 +29,11 @@ be used within [Node.js](http://nodejs.org).
 <a name="download" />
 ## Download
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+To install via `npm`, run:
+
+```
+npm install complex-js
+```
 
 <a name="functions-vs-operators" />
 ## Functions vs. Operators
@@ -178,7 +178,7 @@ console.log(output.toString(true));
 <a name="documentation" />
 ## Documentation
 
-### [Constructors](#constructors)
+### [Constructors](#constructs)
 
 * [`Complex`](#complex)
 * [`Polar`](#polar)
@@ -262,7 +262,7 @@ For convenience, but also used in many of the trigonometric methods.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-<a name="constructors" />
+<a name="constructs" />
 ## Constructors
 
 <a name="complex" />

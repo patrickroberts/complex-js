@@ -202,12 +202,12 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 <a name="documentation" />
 ## Documentation
 
-<h3>[Constructors](#constructors)</h3>
+### [Constructors](#constructs)
 
 * [`Complex`](#complex)
 * [`Polar`](#polar)
 
-<h3>[Non-Static Methods](#non-static)</h3>
+### [Non-Static Methods](#non-static)
 
 * [`toString`](#to-string)
 * [`add`](#add)
@@ -218,7 +218,7 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 * [`cPow`](#c-pow)
 * [`mod`](#mod)
 
-<h3>[Static Methods](#static)</h3>
+### [Static Methods](#static)
 
 * [`conj`](#conj)
 * [`neg`](#neg)
@@ -231,7 +231,7 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 * [`round`](#round)
 * [`fPart`](#f-part)
 
-<h3>[Mathematical Static Methods](#math)</h3>
+### [Mathematical Static Methods](#math)
 
 * [`exp`](#exp)
 * [`log`](#log)
@@ -262,7 +262,7 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 * [`arccsch`](#arccsch)
 * [`arccoth`](#arccoth)
 
-<h3>[Misc. Static Methods](#misc)</h3>
+### [Misc. Static Methods](#misc)
 
 * [`min`](#min)
 * [`max`](#max)
@@ -271,7 +271,7 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 * [`formatFunction`](#format-function)
 * [`parseFunction`](#parse-function)
 
-<h3>Constants</h3>
+### Constants
 
 For convenience, but also used in many of the trigonometric methods.
 
@@ -286,7 +286,7 @@ For convenience, but also used in many of the trigonometric methods.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-<a name="constructors" />
+<a name="constructs" />
 ## Constructors
 
 <a name="complex" />

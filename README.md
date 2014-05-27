@@ -35,6 +35,18 @@ To install via `npm`, run:
 npm install complex-js
 ```
 
+To include this module in the Node.js environment, add the line:
+
+```js
+var Complex = require('complex-js');
+```
+
+In the browser, simply add the script:
+
+```html
+<script type="text/javascript" src="complex.min.js"></script>
+```
+
 <a name="functions-vs-operators" />
 ## Functions vs. Operators
 

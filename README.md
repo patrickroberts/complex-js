@@ -8,10 +8,10 @@ argument function, the absolute value function and many others.
 
 Lastly, but most importantly, this module contains a compiler to
 parse human-readable expressions into native JavaScript functions.
-The compiler, accessible from `Complex.parseFunction`, accepts an
-arbitrary amount of parameters to pass to the function, specified
-by their human-readable names. Example usage can be found below in
-the section [`Parsing Human-Readable Expressions`](#parsing).
+The compiler, accessible from [`Complex.parseFunction`](#parse-function),
+accepts an arbitrary amount of parameters to pass to the function,
+specified by their human-readable names. Example usage can be found
+below in the section [Parsing Human-Readable Expressions](#parsing).
 
 Although originally written for use in the browser, it can also now
 be used within [Node.js](http://nodejs.org).

@@ -59,14 +59,14 @@ console.log(Complex.tan(Complex(0,1)));
 
 All functions are static, meaning that they are called directly by
 the Complex namespace. Operators are non-static methods, which means
-they must be called by an instance of Complex. For example, to raise
+they must be called by an instance of `Complex`. For example, to raise
 1+5i to the power of 3*e^((2/3)pi*i), do the following:
 
 ```js
 console.log(Complex(1,5).cPow(Complex.Polar(3,2/3*Math.PI)));
 ```
 
-Notice how `cPow` is a method of a Complex instance, and not of the
+Notice how `cPow` is a method of a `Complex` instance, and not of the
 namespace Complex. That's because it is an operator rather than a
 function. Non-static methods are denoted as
 `Complex.prototype.nonStaticMethod`.
@@ -101,7 +101,7 @@ Similarly, both notations are supported in the toString method.
 Simply call `toString()` for exponential (the default),
 or `toString(true)` for cartesian notation.
 
-These strings can be used to reconstruct the complex instances, but
+These strings can be used to reconstruct the Complex instances, but
 that will be covered in the next section.
 
 
@@ -185,17 +185,29 @@ var Complex = require("complex-js"),
 console.log(output.toString(true));
 ```
 
+The `Complex.parseFunction` method can also reconstruct a Complex
+number from a string created by `Complex.toString`. See below for
+a demonstration:
+
+```js
+var five_plus_i_str = Complex(5,1).toString(true), //store as cartesian
+    five_plus_i = (Complex.parseFunction(five_plus_i_str, []))();
+
+// should log true
+console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_i.i === 1);
+```
+
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 <a name="documentation" />
 ## Documentation
 
-### [Constructors](#constructs)
+<h3>[Constructors](#constructors)</h3>
 
 * [`Complex`](#complex)
 * [`Polar`](#polar)
 
-### [Non-Static Methods](#non-static)
+<h3>[Non-Static Methods](#non-static)</h3>
 
 * [`toString`](#to-string)
 * [`add`](#add)
@@ -206,7 +218,7 @@ console.log(output.toString(true));
 * [`cPow`](#c-pow)
 * [`mod`](#mod)
 
-### [Static Methods](#static)
+<h3>[Static Methods](#static)</h3>
 
 * [`conj`](#conj)
 * [`neg`](#neg)
@@ -219,7 +231,7 @@ console.log(output.toString(true));
 * [`round`](#round)
 * [`fPart`](#f-part)
 
-### [Mathematical Static Methods](#math)
+<h3>[Mathematical Static Methods](#math)</h3>
 
 * [`exp`](#exp)
 * [`log`](#log)
@@ -250,7 +262,7 @@ console.log(output.toString(true));
 * [`arccsch`](#arccsch)
 * [`arccoth`](#arccoth)
 
-### [Misc. Static Methods](#misc)
+<h3>[Misc. Static Methods](#misc)</h3>
 
 * [`min`](#min)
 * [`max`](#max)
@@ -259,7 +271,7 @@ console.log(output.toString(true));
 * [`formatFunction`](#format-function)
 * [`parseFunction`](#parse-function)
 
-### Constants
+<h3>Constants</h3>
 
 For convenience, but also used in many of the trigonometric methods.
 
@@ -274,7 +286,7 @@ For convenience, but also used in many of the trigonometric methods.
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-<a name="constructs" />
+<a name="constructors" />
 ## Constructors
 
 <a name="complex" />

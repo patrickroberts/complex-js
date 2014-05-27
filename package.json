@@ -1,0 +1,17 @@
+{
+	"name": "complex-js",
+	"description": "Complex math for the browser and Node.js",
+	"author": "Patrick Roberts",
+	"main": "./lib/complex",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library.git"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library/raw/master/LICENSE"
+		}
+	]
+}

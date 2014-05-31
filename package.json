@@ -3,7 +3,7 @@
 	"description": "Complex math for the browser and Node.js",
 	"author": "Patrick Roberts",
 	"main": "./lib/complex",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library.git"

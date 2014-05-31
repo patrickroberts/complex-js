@@ -191,10 +191,10 @@ a demonstration:
 
 ```js
 var five_plus_i_str = Complex(5,1).toString(true), //store as cartesian
-    five_plus_i = (Complex.parseFunction(five_plus_i_str, []))();
+    five_plus_i = (Complex.parseFunction(five_plus_i_str))();
 
 // should log true
-console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_i.i === 1);
+console.log(five_plus_i instanceof Complex && five_plus_i.r === 5 && five_plus_i.i === 1);
 ```
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -235,6 +235,8 @@ console.log(five_plus_i instanceof Complex && five_plus_i.re === 5 && five_plus_
 
 * [`exp`](#exp)
 * [`log`](#log)
+* [`square`](#square)
+* [`cube`](#cube)
 * [`sqrt`](#sqrt)
 * [`cbrt`](#cbrt)
 * [`cos`](#cos)
@@ -315,6 +317,20 @@ __Arguments__
 
 * `abs` - A `Number` specifying the absolute value of the Complex number.
 * `arg` - A `Number` specifying the argument of the Complex number.
+
+
+**Note** In order to access the values directly from the instance,
+examine the following demo code:
+
+```js
+var complex = Complex(Math.random()*2-1,Math.random()*2-1);
+console.log(
+	complex.r, // real part
+	complex.i, // imaginary part
+	complex.m, // magnitude
+	complex.t  // argument
+);
+```
 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
@@ -529,6 +545,26 @@ __Arguments__
 ### Complex.log(complex)
 
 Returns the natural logarithm of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="square" />
+### Complex.square(complex)
+
+Returns the square of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="cube" />
+### Complex.cube(complex)
+
+Returns the cube of `complex`.
 
 __Arguments__
 

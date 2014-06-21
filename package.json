@@ -1,9 +1,13 @@
 {
 	"name": "complex-js",
 	"description": "Complex math for the browser and Node.js",
+	"tags": [
+		"complex",
+		"math"
+	],
 	"author": "Patrick Roberts",
-	"main": "./lib/complex",
-	"version": "1.0.3",
+	"main": "./index",
+	"version": "1.0.4",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library.git"

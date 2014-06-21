@@ -60,7 +60,7 @@ console.log(Complex.tan(Complex(0,1)));
 All functions are static, meaning that they are called directly by
 the Complex namespace. Operators are non-static methods, which means
 they must be called by an instance of `Complex`. For example, to raise
-1+5i to the power of 3*e^((2/3)pi*i), do the following:
+1+5i to the power of 3 e^((2/3)pi i), do the following:
 
 ```js
 console.log(Complex(1,5).cPow(Complex.Polar(3,2/3*Math.PI)));

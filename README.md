@@ -235,6 +235,8 @@ console.log(five_plus_i instanceof Complex && five_plus_i.r === 5 && five_plus_i
 
 * [`exp`](#exp)
 * [`log`](#log)
+* [`gamma`](#gamma)
+* [`fact`](#fact)
 * [`square`](#square)
 * [`cube`](#cube)
 * [`sqrt`](#sqrt)
@@ -550,6 +552,23 @@ __Arguments__
 
 * `complex` - An instance of the `Complex` class.
 
+<a name="gamma" />
+### Complex.gamma(complex)
+
+Returns the gamma function of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+<a name="fact" />
+### Complex.fact(complex)
+
+Returns the factorial of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
 
 <a name="square" />
 ### Complex.square(complex)

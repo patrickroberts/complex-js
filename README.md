@@ -1,6 +1,6 @@
-# Complex.js
+<h1 style="text-align:center"><img  src="http://i.imgur.com/XBOpBt1.png"></h1>
 
-Complex.js is a lightweight module that enables Complex mathematics
+Complex-js is a lightweight module that enables complex mathematics
 in JavaScript. It comes with every elementary function and all
 mathematical operators. It also includes many utility functions and
 common non-analytical functions such as the Complex conjugate, the
@@ -24,9 +24,7 @@ be used within [Node.js](http://nodejs.org).
 * [Parsing Human-Readable Expressions](#parsing)
 * [Documentation](#documentation)
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-<a name="download" />
+<a name="download"></a>
 ## Download
 
 To install via `npm`, run:
@@ -47,7 +45,7 @@ In the browser, simply add the script:
 <script type="text/javascript" src="complex.min.js"></script>
 ```
 
-<a name="functions-vs-operators" />
+<a name="functions-vs-operators"></a>
 ## Functions vs. Operators
 
 Functions are denoted as `Complex.staticMethod`. For example,
@@ -72,7 +70,7 @@ function. Non-static methods are denoted as
 `Complex.prototype.nonStaticMethod`.
 
 
-<a name="coordinate-notation" />
+<a name="coordinate-notation"></a>
 ## Coordinate Notation
 
 Complex.js supports both cartesian and exponential notation. In order
@@ -97,7 +95,7 @@ var exponential_1_e_to_pi_i = Complex.Polar(1,Math.PI);
 Note that this constructor does not support the `new` keyword and
 should never be called with it, as it does so internally.
 
-Similarly, both notations are supported in the toString method.
+Similarly, both notations are supported in the `Complex.prototype.toString` method.
 Simply call `toString()` for exponential (the default),
 or `toString(true)` for cartesian notation.
 
@@ -105,7 +103,7 @@ These strings can be used to reconstruct the Complex instances, but
 that will be covered in the next section.
 
 
-<a name="parsing" />
+<a name="parsing"></a>
 ## Parsing Human-Readable Expressions
 
 Complex.js also includes a compiler for human-readable expressions,
@@ -193,13 +191,11 @@ a demonstration:
 var five_plus_i_str = Complex(5,1).toString(true), //store as cartesian
     five_plus_i = (Complex.parseFunction(five_plus_i_str))();
 
-// should log true
-console.log(five_plus_i instanceof Complex && five_plus_i.r === 5 && five_plus_i.i === 1);
+console.log(Complex(5,1).equals(five_plus_i));
+// true
 ```
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-<a name="documentation" />
+<a name="documentation"></a>
 ## Documentation
 
 ### [Constructors](#constructs)
@@ -210,37 +206,41 @@ console.log(five_plus_i instanceof Complex && five_plus_i.r === 5 && five_plus_i
 ### [Non-Static Methods](#non-static)
 
 * [`toString`](#to-string)
+* [`equals`](#equals)
+* [`re`](#p-re)
+* [`im`](#p-im)
+* [`abs`](#p-abs)
+* [`arg`](#p-arg)
 * [`add`](#add)
 * [`sub`](#sub)
 * [`mult`](#mult)
 * [`divBy`](#div-by)
+* [`mod`](#mod)
 * [`pow`](#pow)
 * [`cPow`](#c-pow)
-* [`mod`](#mod)
 
 ### [Static Methods](#static)
 
-* [`conj`](#conj)
 * [`neg`](#neg)
 * [`re`](#re)
 * [`im`](#im)
 * [`abs`](#abs)
 * [`arg`](#arg)
+* [`conj`](#conj)
+* [`norm`](#norm)
 * [`floor`](#floor)
 * [`ceil`](#ceil)
 * [`round`](#round)
+* [`iPart`](#i-part)
 * [`fPart`](#f-part)
-
-### [Mathematical Static Methods](#math)
-
-* [`exp`](#exp)
-* [`log`](#log)
-* [`gamma`](#gamma)
-* [`fact`](#fact)
 * [`square`](#square)
 * [`cube`](#cube)
 * [`sqrt`](#sqrt)
 * [`cbrt`](#cbrt)
+* [`exp`](#exp)
+* [`log`](#log)
+* [`gamma`](#gamma)
+* [`fact`](#fact)
 * [`cos`](#cos)
 * [`sin`](#sin)
 * [`tan`](#tan)
@@ -283,17 +283,15 @@ For convenience, but also used in many of the trigonometric methods.
 * `1` - one
 * `I` - i
 * `-I` - negative i
-* `PI` - irrational constant "pi"
+* `PI` - irrational constant "π"
 * `E` - irrational constant "e"
 * `2` - two
 * `2I` - two i
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-<a name="constructs" />
+<a name="constructs"></a>
 ## Constructors
 
-<a name="complex" />
+<a name="complex"></a>
 ### Complex(real, imag[, abs[, arg]])
 
 The cartesian constructor for instances of the `Complex` class.
@@ -309,7 +307,7 @@ __Arguments__
   Not recommended unless accurately calculated.
 
 
-<a name="polar" />
+<a name="polar"></a>
 ### Complex.Polar(abs, arg)
 
 The exponential constructor for instances of the `Complex` class.
@@ -321,25 +319,23 @@ __Arguments__
 * `arg` - A `Number` specifying the argument of the Complex number.
 
 
-**Note** In order to access the values directly from the instance,
+**Note** In order to access the components from the instance,
 examine the following demo code:
 
 ```js
 var complex = Complex(Math.random()*2-1,Math.random()*2-1);
 console.log(
-	complex.r, // real part
-	complex.i, // imaginary part
-	complex.m, // magnitude
-	complex.t  // argument
+	complex.real(), // real part
+	complex.imag(), // imaginary part
+	complex.abs(),  // absolute value
+	complex.arg()   // argument
 );
 ```
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-<a name="non-static" />
+<a name="non-static"></a>
 ## Non-Static Methods
 
-<a name="to-string" />
+<a name="to-string"></a>
 ### Complex.prototype.toString([cartesian])
 
 The `toString` method for the `Complex` class. Outputs to exponential
@@ -350,8 +346,64 @@ __Arguments__
 * `cartesian` - An optional Boolean specifying the output form.
   If truthy, it outputs as cartesian, otherwise it outputs as exponential.
 
+**Examples**
 
-<a name="add" />
+```js
+var c1 = Complex(-3,0),
+	c2 = Complex(0,-1),
+	c3 = Complex(3,4),
+	c4 = Complex(-2,-5);
+
+console.log(c1.toString());
+// "3 e^(3.141592653589793 i)"
+
+console.log(c2.toString(true));
+// "-i"
+
+console.log(c3.toString());
+// "5 e^(0.9272952180016123 i)"
+
+console.log(c4.toString(true));
+// "-2-5 i"
+```
+
+
+<a name="equals"></a>
+### Complex.prototype.equals(complex)
+
+Compares two complex numbers and determines whether they are approximately equal,
+taking into consideration truncation error.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class to which to compare.
+
+
+<a name="p-re"></a>
+### Complex.prototype.re(), Complex.prototype.real()
+
+Returns the real component as a `Number`.
+
+
+<a name="p-im"></a>
+### Complex.prototype.im(), Complex.prototype.imag()
+
+Returns the imaginary component as a `Number`.
+
+
+<a name="p-abs"></a>
+### Complex.prototype.abs(), Complex.prototype.mag()
+
+Returns the magnitude as a `Number`.
+
+
+<a name="p-arg"></a>
+### Complex.prototype.arg(), Complex.prototype.angle()
+
+Returns the argument as a `Number`.
+
+
+<a name="add"></a>
 ### Complex.prototype.add(complex)
 
 Adds two Complex numbers.
@@ -361,7 +413,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to add.
 
 
-<a name="sub" />
+<a name="sub"></a>
 ### Complex.prototype.sub(complex)
 
 Subtracts a Complex number from another.
@@ -371,7 +423,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to subtract.
 
 
-<a name="mult" />
+<a name="mult"></a>
 ### Complex.prototype.mult(complex)
 
 Multiplies two Complex numbers.
@@ -381,37 +433,17 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to multiply.
 
 
-<a name="div-by" />
+<a name="div-by"></a>
 ### Complex.prototype.divBy(complex)
 
 Divides a Complex number from another.
 
 __Arguments__
 
-* `complex` - An instance of the `Complex` class to divide by.
+* `complex` - An instance of the `Complex` class by which to divide.
 
 
-<a name="pow" />
-### Complex.prototype.pow(number)
-
-Raises a Complex number to a real power.
-
-__Arguments__
-
-* `number` - A `Number` to raise the Complex number to.
-
-
-<a name="c-pow" />
-### Complex.prototype.cPow(complex)
-
-Raises a Complex number to a Complex power.
-
-__Arguments__
-
-* `complex` - An instance of the `Complex` class to raise by.
-
-
-<a name="mod" />
+<a name="mod"></a>
 ### Complex.prototype.mod(complex)
 
 Applies a Complex Modulus to a Complex number by cartesian coordinates.
@@ -420,22 +452,31 @@ __Arguments__
 
 * `complex` - An instance of the `Complex` class for the modulus.
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-<a name="static" />
-## Static Methods
+<a name="pow"></a>
+### Complex.prototype.pow(number)
 
-<a name="conj" />
-### Complex.conj(complex)
-
-Returns the conjugate of `complex`.
+Raises a Complex number to a real power.
 
 __Arguments__
 
-* `complex` - An instance of the `Complex` class to conjugate.
+* `number` - A `Number` to which to raise the Complex number.
 
 
-<a name="neg" />
+<a name="c-pow"></a>
+### Complex.prototype.cPow(complex)
+
+Raises a Complex number to a Complex power.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class by which to raise.
+
+<a name="static"></a>
+## Static Methods
+
+
+<a name="neg"></a>
 ### Complex.neg(complex)
 
 Returns the negative of `complex`.
@@ -445,7 +486,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to negate.
 
 
-<a name="re" />
+<a name="re"></a>
 ### Complex.re(complex)
 
 Returns the real component of `complex` as an instance of Complex.
@@ -456,7 +497,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="im" />
+<a name="im"></a>
 ### Complex.im(complex)
 
 Returns the imaginary component of `complex` as an instance of Complex.
@@ -467,7 +508,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="abs" />
+<a name="abs"></a>
 ### Complex.abs(complex)
 
 Returns the absolute value of `complex`.
@@ -478,7 +519,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arg" />
+<a name="arg"></a>
 ### Complex.arg(complex)
 
 Returns the argument of `complex`.
@@ -489,7 +530,29 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="floor" />
+<a name="conj"></a>
+### Complex.conj(complex)
+
+Returns the conjugate of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class to conjugate.
+
+
+<a name="norm"></a>
+### Complex.norm(complex)
+
+Returns the unit complex number with the same argument as `complex`.
+If the magnitude of `complex` is 0, then an instance of `Complex` is
+returned with a magnitude of `NaN` and an argument of 0.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class to normalize.
+
+
+<a name="floor"></a>
 ### Complex.floor(complex)
 
 Rounds down the cartesian components of `complex`.
@@ -499,7 +562,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="ceil" />
+<a name="ceil"></a>
 ### Complex.ceil(complex)
 
 Rounds up the cartesian components of `complex`.
@@ -509,7 +572,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="round" />
+<a name="round"></a>
 ### Complex.round(complex)
 
 Rounds the cartesian components of `complex` to the nearest integers.
@@ -519,7 +582,18 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="f-part" />
+<a name="i-part"></a>
+### Complex.iPart(complex)
+
+Returns the integer parts of the cartesian coordinates in `complex`.
+This floors positive components and ceilings negative components.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="f-part"></a>
 ### Complex.fPart(complex)
 
 Returns the fractional parts of the cartesian coordinates in `complex`.
@@ -528,49 +602,8 @@ __Arguments__
 
 * `complex` - An instance of the `Complex` class.
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
-<a name="math" />
-## Mathematical Static Methods
-
-<a name="exp" />
-### Complex.exp(complex)
-
-Returns the exponent function of `complex`, i.e. `e^complex`
-
-__Arguments__
-
-* `complex` - An instance of the `Complex` class.
-
-
-<a name="log" />
-### Complex.log(complex)
-
-Returns the natural logarithm of `complex`.
-
-__Arguments__
-
-* `complex` - An instance of the `Complex` class.
-
-<a name="gamma" />
-### Complex.gamma(complex)
-
-Returns the gamma function of `complex`.
-
-__Arguments__
-
-* `complex` - An instance of the `Complex` class.
-
-<a name="fact" />
-### Complex.fact(complex)
-
-Returns the factorial of `complex`.
-
-__Arguments__
-
-* `complex` - An instance of the `Complex` class.
-
-<a name="square" />
+<a name="square"></a>
 ### Complex.square(complex)
 
 Returns the square of `complex`.
@@ -580,7 +613,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="cube" />
+<a name="cube"></a>
 ### Complex.cube(complex)
 
 Returns the cube of `complex`.
@@ -590,7 +623,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="sqrt" />
+<a name="sqrt"></a>
 ### Complex.sqrt(complex)
 
 Returns the square root of `complex`.
@@ -600,7 +633,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="cbrt" />
+<a name="cbrt"></a>
 ### Complex.cbrt(complex)
 
 Returns the cube root of `complex`.
@@ -610,7 +643,53 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="cos" />
+<a name="exp"></a>
+### Complex.exp(complex)
+
+Returns the exponent function of `complex`, i.e. `e^complex`
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="log"></a>
+### Complex.log(complex)
+
+Returns the natural logarithm of `complex`.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="gamma"></a>
+### Complex.gamma(complex)
+
+Returns the gamma function of `complex`.
+**Note** This function is not guaranteed to be accurate enough
+for the `Complex.prototype.equals` method to return true when
+compared to expected results.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="fact"></a>
+### Complex.fact(complex)
+
+Returns the factorial of `complex`.
+**Note** This function is not guaranteed to be accurate enough
+for the `Complex.prototype.equals` method to return true when
+compared to expected results.
+
+__Arguments__
+
+* `complex` - An instance of the `Complex` class.
+
+
+<a name="cos"></a>
 ### Complex.cos(complex)
 
 Returns the cosine of `complex`.
@@ -620,7 +699,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="sin" />
+<a name="sin"></a>
 ### Complex.sin(complex)
 
 Returns the sine of `complex`.
@@ -630,7 +709,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="tan" />
+<a name="tan"></a>
 ### Complex.tan(complex)
 
 Returns the tangent of `complex`.
@@ -640,7 +719,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="sec" />
+<a name="sec"></a>
 ### Complex.sec(complex)
 
 Returns the secant of `complex`.
@@ -650,7 +729,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="csc" />
+<a name="csc"></a>
 ### Complex.csc(complex)
 
 Returns the cosecant of `complex`.
@@ -660,7 +739,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="cot" />
+<a name="cot"></a>
 ### Complex.cot(complex)
 
 Returns the cotangent of `complex`.
@@ -670,7 +749,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccos" />
+<a name="arccos"></a>
 ### Complex.arccos(complex)
 
 Returns the arccosine of `complex`.
@@ -680,7 +759,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arcsin" />
+<a name="arcsin"></a>
 ### Complex.arcsin(complex)
 
 Returns the arcsine of `complex`.
@@ -690,7 +769,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arctan" />
+<a name="arctan"></a>
 ### Complex.arctan(complex)
 
 Returns the arctangent of `complex`.
@@ -700,7 +779,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arcsec" />
+<a name="arcsec"></a>
 ### Complex.arcsec(complex)
 
 Returns the arcsecant of `complex`.
@@ -710,7 +789,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccsc" />
+<a name="arccsc"></a>
 ### Complex.arccsc(complex)
 
 Returns the arccosecant of `complex`.
@@ -720,7 +799,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccot" />
+<a name="arccot"></a>
 ### Complex.arccot(complex)
 
 Returns the arccotangent of `complex`.
@@ -730,7 +809,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="cosh" />
+<a name="cosh"></a>
 ### Complex.cosh(complex)
 
 Returns the hyperbolic cosine of `complex`.
@@ -740,7 +819,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="sinh" />
+<a name="sinh"></a>
 ### Complex.sinh(complex)
 
 Returns the hyperbolic sine of `complex`.
@@ -750,7 +829,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="tanh" />
+<a name="tanh"></a>
 ### Complex.tanh(complex)
 
 Returns the hyperbolic tangent of `complex`.
@@ -760,7 +839,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="sech" />
+<a name="sech"></a>
 ### Complex.sech(complex)
 
 Returns the hyperbolic secant of `complex`.
@@ -770,7 +849,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="csch" />
+<a name="csch"></a>
 ### Complex.csch(complex)
 
 Returns the hyperbolic cosecant of `complex`.
@@ -780,7 +859,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="coth" />
+<a name="coth"></a>
 ### Complex.coth(complex)
 
 Returns the hyperbolic cotangent of `complex`.
@@ -790,7 +869,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccosh" />
+<a name="arccosh"></a>
 ### Complex.arccosh(complex)
 
 Returns the hyperbolic arccosine of `complex`.
@@ -800,7 +879,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arcsinh" />
+<a name="arcsinh"></a>
 ### Complex.arcsinh(complex)
 
 Returns the hyperbolic arcsine of `complex`.
@@ -810,7 +889,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arctanh" />
+<a name="arctanh"></a>
 ### Complex.arctanh(complex)
 
 Returns the hyperbolic arctangent of `complex`.
@@ -820,7 +899,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arcsech" />
+<a name="arcsech"></a>
 ### Complex.arcsech(complex)
 
 Returns the hyperbolic arcsecant of `complex`.
@@ -830,7 +909,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccsch" />
+<a name="arccsch"></a>
 ### Complex.arccsch(complex)
 
 Returns the hyperbolic arccosecant of `complex`.
@@ -840,7 +919,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="arccoth" />
+<a name="arccoth"></a>
 ### Complex.arccoth(complex)
 
 Returns the hyperbolic arccotangent of `complex`.
@@ -849,12 +928,10 @@ __Arguments__
 
 * `complex` - An instance of the `Complex` class.
 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-<a name="misc" />
+<a name="misc"></a>
 ## Misc. Static Methods
 
-<a name="min" />
+<a name="min"></a>
 ### Complex.min(complex_1[, complex_2...])
 
 Returns the first complex instance with the smallest absolute value.
@@ -864,7 +941,7 @@ __Arguments__
 * `complex_n` - An instance of the `Complex` class.
 
 
-<a name="max" />
+<a name="max"></a>
 ### Complex.max(complex_1[, complex_2...])
 
 Returns the first complex instance with the largest absolute value.
@@ -874,7 +951,7 @@ __Arguments__
 * `complex_n` - An instance of the `Complex` class.
 
 
-<a name="is-nan" />
+<a name="is-nan"></a>
 ### Complex.isNaN(complex)
 
 Returns a `Boolean`; if any component of `complex` evaluates to `NaN`,
@@ -885,7 +962,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="is-finite" />
+<a name="is-finite"></a>
 ### Complex.isFinite(complex)
 
 Returns a `Boolean`; if the absolute value of `complex` is finite,
@@ -896,7 +973,7 @@ __Arguments__
 * `complex` - An instance of the `Complex` class.
 
 
-<a name="format-function" />
+<a name="format-function"></a>
 ### Complex.formatFunction(string)
 
 Returns a sterilized human-readable expression that can be parsed by
@@ -908,7 +985,7 @@ __Arguments__
 * `string` - A human-readable `String` of a math expression to be sterilized.
 
 
-<a name="parse-function" />
+<a name="parse-function"></a>
 ### Complex.parseFunction(string[, params[, skipFormat]])
 
 Returns a JavaScript function bound with pre-compiled constants parsed

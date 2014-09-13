@@ -1,4 +1,4 @@
-<h1 style="text-align:center"><img  src="http://i.imgur.com/XBOpBt1.png"></h1>
+<h1 style="text-align:center"><img  src="https://i.imgur.com/XBOpBt1.png"></h1>
 
 Complex-js is a lightweight module that enables complex mathematics
 in JavaScript. It comes with every elementary function and all

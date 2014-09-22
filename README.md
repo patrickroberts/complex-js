@@ -3,7 +3,7 @@
 Complex-js is a lightweight module that enables complex mathematics
 in JavaScript. It comes with every elementary function and all
 mathematical operators. It also includes many utility functions and
-common non-analytical functions such as the Complex conjugate, the
+common non-analytical functions such as the complex conjugate, the
 argument function, the absolute value function and many others.
 
 Lastly, but most importantly, this module contains a compiler to
@@ -279,14 +279,14 @@ console.log(Complex(5,1).equals(five_plus_i));
 
 For convenience, but also used in many of the trigonometric methods.
 
-* `0` - zero
-* `1` - one
-* `I` - i
-* `-I` - negative i
-* `PI` - irrational constant "π"
-* `E` - irrational constant "e"
-* `2` - two
-* `2I` - two i
+* `Complex.ZERO` - zero
+* `Complex.ONE` - one
+* `Complex.I` - i
+* `Complex.NEG_I` - negative i
+* `Complex.PI` - irrational constant "π"
+* `Complex.E` - irrational constant "e"
+* `Complex.TWO` - two
+* `Complex.TWO_I` - two i
 
 <a name="constructs"></a>
 ## Constructors

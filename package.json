@@ -7,15 +7,15 @@
 	],
 	"author": "Patrick Roberts",
 	"main": "./index",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library.git"
+		"url": "https://github.com/patrickroberts/complex-js.git"
 	},
 	"licenses": [
 		{
 			"type": "MIT",
-			"url": "https://github.com/patrickroberts/Javascript-Complex-Math-Library/raw/master/LICENSE"
+			"url": "https://github.com/patrickroberts/complex-js/raw/master/LICENSE"
 		}
 	]
 }

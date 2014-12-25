@@ -61,10 +61,10 @@ they must be called by an instance of `Complex`. For example, to raise
 1+5i to the power of 3 e^((2/3)pi i), do the following:
 
 ```js
-console.log(Complex(1,5).cPow(Complex.Polar(3,2/3*Math.PI)));
+console.log(Complex(1,5).pow(Complex.Polar(3,2/3*Math.PI)));
 ```
 
-Notice how `cPow` is a method of a `Complex` instance, and not of the
+Notice how `pow` is a method of a `Complex` instance, and not of the
 namespace Complex. That's because it is an operator rather than a
 function. Non-static methods are denoted as
 `Complex.prototype.nonStaticMethod`.
@@ -153,7 +153,7 @@ input.addEventListener('change', function(){
 		//if the parser throws an error, clear outputs and alert error
 		cart.innerHTML = "";
 		expo.innerHTML = "";
-		alert(error);
+		alert(error.message);
 	}
 });
 ```
@@ -211,13 +211,18 @@ console.log(Complex(5,1).equals(five_plus_i));
 * [`im`](#p-im)
 * [`abs`](#p-abs)
 * [`arg`](#p-arg)
+* [`rAdd`](#r-add)
 * [`add`](#add)
+* [`rSub`](#r-sub)
 * [`sub`](#sub)
+* [`rMult`](#r-mult)
 * [`mult`](#mult)
+* [`rDivBy`](#r-div-by)
 * [`divBy`](#div-by)
+* [`rMod`](#r-mod)
 * [`mod`](#mod)
+* [`rPow`](#r-pow)
 * [`pow`](#pow)
-* [`cPow`](#c-pow)
 
 ### [Static Methods](#static)
 
@@ -266,7 +271,7 @@ console.log(Complex(5,1).equals(five_plus_i));
 * [`arccsch`](#arccsch)
 * [`arccoth`](#arccoth)
 
-### [Misc. Static Methods](#misc)
+### [Misc. Methods](#misc)
 
 * [`min`](#min)
 * [`max`](#max)
@@ -403,6 +408,16 @@ Returns the magnitude as a `Number`.
 Returns the argument as a `Number`.
 
 
+<a name="r-add"></a>
+### Complex.prototype.rAdd(real)
+
+Adds a Complex number and a `Number`.
+
+__Arguments__
+
+* `real` - A `Number` to add.
+
+
 <a name="add"></a>
 ### Complex.prototype.add(complex)
 
@@ -411,6 +426,16 @@ Adds two Complex numbers.
 __Arguments__
 
 * `complex` - An instance of the `Complex` class to add.
+
+
+<a name="r-sub"></a>
+### Complex.prototype.rSub(real)
+
+Subtracts a `Number` from a Complex number.
+
+__Arguments__
+
+* `real` - A `Number` to subtract.
 
 
 <a name="sub"></a>
@@ -423,6 +448,16 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to subtract.
 
 
+<a name="r-mult"></a>
+### Complex.prototype.rMult(real)
+
+Multiplies a Complex number and a `Number`.
+
+__Arguments__
+
+* `real` - A `Number` to multiply.
+
+
 <a name="mult"></a>
 ### Complex.prototype.mult(complex)
 
@@ -433,14 +468,34 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to multiply.
 
 
+<a name="r-div-by"></a>
+### Complex.prototype.rDivBy(real)
+
+Divides a Complex number by a `Number`.
+
+__Arguments__
+
+* `real` - A `Number` by which to divide.
+
+
 <a name="div-by"></a>
 ### Complex.prototype.divBy(complex)
 
-Divides a Complex number from another.
+Divides a Complex number by another.
 
 __Arguments__
 
 * `complex` - An instance of the `Complex` class by which to divide.
+
+
+<a name="r-mod"></a>
+### Complex.prototype.rMod(real)
+
+Applies a Real Modulus to a Complex number by cartesian coordinates.
+
+__Arguments__
+
+* `real` - A `Number` to for the modulus.
 
 
 <a name="mod"></a>
@@ -453,24 +508,25 @@ __Arguments__
 * `complex` - An instance of the `Complex` class for the modulus.
 
 
-<a name="pow"></a>
-### Complex.prototype.pow(number)
+<a name="r-pow"></a>
+### Complex.prototype.rPow(real)
 
-Raises a Complex number to a real power.
+Raises a Complex number to a Real power.
 
 __Arguments__
 
-* `number` - A `Number` to which to raise the Complex number.
+* `real` - A `Number` by which to raise.
 
 
-<a name="c-pow"></a>
-### Complex.prototype.cPow(complex)
+<a name="pow"></a>
+### Complex.prototype.pow(complex)
 
 Raises a Complex number to a Complex power.
 
 __Arguments__
 
 * `complex` - An instance of the `Complex` class by which to raise.
+
 
 <a name="static"></a>
 ## Static Methods

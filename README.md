@@ -1,4 +1,4 @@
-<h1 style="text-align:center"><img  src="https://i.imgur.com/XBOpBt1.png"></h1>
+<h1 style="text-align:center"><img src="https://i.imgur.com/XBOpBt1.png"></h1>
 
 Complex-js is a lightweight module that enables complex mathematics
 in JavaScript. It comes with every elementary function and all
@@ -52,23 +52,32 @@ Functions are denoted as `Complex.staticMethod`. For example,
 to evaluate the tangent of the imaginary unit, do the following:
 
 ```js
-console.log(Complex.tan(Complex(0,1)));
+console.log(Complex.tan(Complex(0, 1)));
 ```
 
 All functions are static, meaning that they are called directly by
 the Complex namespace. Operators are non-static methods, which means
 they must be called by an instance of `Complex`. For example, to raise
-1+5i to the power of 3 e^((2/3)pi i), do the following:
+1+5i to the power of 3 e^(pi i), do the following:
 
 ```js
-console.log(Complex(1,5).pow(Complex.Polar(3,2/3*Math.PI)));
+console.log(Complex(1, 5).pow(Complex.Polar(3, Math.PI)));
 ```
 
 Notice how `pow` is a method of a `Complex` instance, and not of the
-namespace Complex. That's because it is an operator rather than a
-function. Non-static methods are denoted as
-`Complex.prototype.nonStaticMethod`.
+namespace Complex. That's because it is an operator rather than a function in
+math. Non-static methods are denoted as `Complex.prototype.nonStaticMethod`.
+Now you can use symbolic operators as well. These include addition ([`+`](#add)),
+subtraction ([`-`](#sub)), multiplication ([`*`](#mult)), division ([`/`](#div)),
+modulii ([`%`](#mod)), powers ([`^`](#pow)), and equalities ([`=`](#equals)).
+Below is a couple examples.
 
+```js
+// 1+5i
+var onePlusFiveI = Complex(1, 0)['+'](Complex(0, 5));
+// e^(pi i)*3
+var negThree = Complex.exp(Complex(0, Math.PI))['*'](Complex(3, 0));
+```
 
 <a name="coordinate-notation"></a>
 ## Coordinate Notation
@@ -78,7 +87,7 @@ to declare a Complex number with cartesian coordinates, you can call
 the default constructor with the following arguments:
 
 ```js
-var cartesian_1_plus_5_i = Complex(1,5);
+var onePlusFiveI = Complex(1, 5);
 ```
 
 Declaring it with the `new` keyword is optional, since the
@@ -89,7 +98,7 @@ not recommended. Exponential notation is supported through the
 secondary Polar constructor as such:
 
 ```js
-var exponential_1_e_to_pi_i = Complex.Polar(1,Math.PI);
+var negOne = Complex.Polar(1, Math.PI);
 ```
 
 Note that this constructor does not support the `new` keyword and
@@ -115,23 +124,28 @@ default. A simple use-case example is below.
 
 HTML:
 ```html
-<!-- the value is (5+i)^(.00003+10*sin(5i)) -->
-<div>
-	<span>Evaluate:</span>
-	<input type="text" id="calc" value="(5+i)^(3e-5+10*sin(5i))"/>
-</div>
-<div>
-	<span>Cartesian:</span>
-	<span id="ans-cart"></span>
-</div>
-<div>
-	<span>Exponential:</span>
-	<span id="ans-expo"></span>
-</div>
-<script type="text/javascript" src="complex.min.js"></script>
-<script type="text/javascript">
-	...
-</script>
+<!DOCTYPE html>
+	<head>
+		<script type="text/javascript" src="complex.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<span>Evaluate:</span>
+			<input type="text" id="calc" value="(5+i)^(3e-5+10*sin(5i))"/>
+		</div>
+		<div>
+			<span>Cartesian:</span>
+			<span id="ans-cart"></span>
+		</div>
+		<div>
+			<span>Exponential:</span>
+			<span id="ans-expo"></span>
+		</div>
+		<script type="text/javascript">
+			...
+		</script>
+	</body>
+</html>
 ```
 JavaScript:
 ```js
@@ -139,20 +153,20 @@ var input = document.getElementById('calc'),
 	cart = document.getElementById('ans-cart'),
 	expo = document.getElementById('ans-expo');
 
-input.addEventListener('change', function(){
+input.addEventListener('change', function () {
 	try {
-		var
-			//will throw an error if input is invalid
-			calc = Complex.parseFunction(input.value),
+		    //will throw an error if input is invalid
+		var calc = Complex.parseFunction(input.value),
 			//evaluate the compiled function for the answer
 			ans = calc();
+
 		//use the toString method
 		cart.innerHTML = ans.toString(true);
 		expo.innerHTML = ans.toString();
 	} catch(error) {
 		//if the parser throws an error, clear outputs and alert error
-		cart.innerHTML = "";
-		expo.innerHTML = "";
+		cart.innerHTML = '';
+		expo.innerHTML = '';
 		alert(error.message);
 	}
 });
@@ -168,19 +182,20 @@ for the compiled function:
 
 ```js
 // Node.js
-var Complex = require("complex-js"),
-	param_a = Complex(5,1),
-	param_b = Complex(3e-5,0),
-	param_c = Complex(0,5),
+var Complex = require('complex-js'),
+	paramA = Complex(5, 1),
+	paramB = Complex(3e-5, 0),
+	paramC = Complex.Polar(5, Math.PI / 2),
 	// human-readable variable names in expression
-	complex_func = "a^(b+10*sin(c))",
+	complexFunc = 'a^(b+10*sin(c))',
 	// array of parameters for function is order-dependent
-	js_func = Complex.parseFunction(complex_func, ["b","a","c"]),
+	jsFunc = Complex.parseFunction(complexFunc, ['b', 'a', 'c']),
 	// how to pass parameters to compiled function
-	output = js_func(param_b, param_a, param_c);
+	output = jsFunc(paramB, paramA, paramC);
 
 // output cartesian form as string
 console.log(output.toString(true));
+// -1.85444755246657E-64+1.5844569641866693E-64 i
 ```
 
 The `Complex.parseFunction` method can also reconstruct a Complex
@@ -188,10 +203,10 @@ number from a string created by `Complex.toString`. See below for
 a demonstration:
 
 ```js
-var five_plus_i_str = Complex(5,1).toString(true), //store as cartesian
-    five_plus_i = (Complex.parseFunction(five_plus_i_str))();
+var fivePlusIStr = Complex(5, 1).toString(true), //store as cartesian
+    fivePlusI = (Complex.parseFunction(fivePlusIStr))();
 
-console.log(Complex(5,1).equals(five_plus_i));
+console.log(Complex(5, 1).equals(fivePlusI));
 // true
 ```
 
@@ -217,8 +232,8 @@ console.log(Complex(5,1).equals(five_plus_i));
 * [`sub`](#sub)
 * [`rMult`](#r-mult)
 * [`mult`](#mult)
-* [`rDivBy`](#r-div-by)
-* [`divBy`](#div-by)
+* [`rDiv`](#r-div)
+* [`div`](#div)
 * [`rMod`](#r-mod)
 * [`mod`](#mod)
 * [`rPow`](#r-pow)
@@ -419,7 +434,7 @@ __Arguments__
 
 
 <a name="add"></a>
-### Complex.prototype.add(complex)
+### Complex.prototype.add(complex), Complex.prototype\['+'\](complex)
 
 Adds two Complex numbers.
 
@@ -439,7 +454,7 @@ __Arguments__
 
 
 <a name="sub"></a>
-### Complex.prototype.sub(complex)
+### Complex.prototype.sub(complex), Complex.prototype\['-'\](complex)
 
 Subtracts a Complex number from another.
 
@@ -459,7 +474,7 @@ __Arguments__
 
 
 <a name="mult"></a>
-### Complex.prototype.mult(complex)
+### Complex.prototype.mult(complex), Complex.prototype\['*'\](complex)
 
 Multiplies two Complex numbers.
 
@@ -468,8 +483,8 @@ __Arguments__
 * `complex` - An instance of the `Complex` class to multiply.
 
 
-<a name="r-div-by"></a>
-### Complex.prototype.rDivBy(real)
+<a name="r-div"></a>
+### Complex.prototype.rDiv(real)
 
 Divides a Complex number by a `Number`.
 
@@ -478,8 +493,8 @@ __Arguments__
 * `real` - A `Number` by which to divide.
 
 
-<a name="div-by"></a>
-### Complex.prototype.divBy(complex)
+<a name="div"></a>
+### Complex.prototype.div(complex), Complex.prototype\['/'\](complex)
 
 Divides a Complex number by another.
 
@@ -499,7 +514,7 @@ __Arguments__
 
 
 <a name="mod"></a>
-### Complex.prototype.mod(complex)
+### Complex.prototype.mod(complex), Complex.prototype\['%'\](complex)
 
 Applies a Complex Modulus to a Complex number by cartesian coordinates.
 
@@ -519,7 +534,7 @@ __Arguments__
 
 
 <a name="pow"></a>
-### Complex.prototype.pow(complex)
+### Complex.prototype.pow(complex), Complex.prototype\['^'\](complex)
 
 Raises a Complex number to a Complex power.
 
@@ -1042,7 +1057,7 @@ __Arguments__
 
 
 <a name="parse-function"></a>
-### Complex.parseFunction(string[, params[, skipFormat]])
+### Complex.parseFunction(string[, params][, skipFormat])
 
 Returns a JavaScript function bound with pre-compiled constants parsed
 from the human-readable math expression `string`. Optionally, an `Array`

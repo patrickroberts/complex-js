@@ -27,10 +27,10 @@ be used within [Node.js](http://nodejs.org).
 <a name="download"></a>
 ## Download
 
-To install via `npm`, run:
+To install via [`npm`](https://www.npmjs.com/package/complex-js), run:
 
 ```
-npm install complex-js
+npm install --save complex-js
 ```
 
 To include this module in the Node.js environment, add the line:
@@ -39,10 +39,16 @@ To include this module in the Node.js environment, add the line:
 var Complex = require('complex-js');
 ```
 
-In the browser, simply add the script:
+In the browser, use a script tag:
 
 ```html
 <script type="text/javascript" src="complex.min.js"></script>
+```
+
+Complex.js can now be included as an AMD module as well, and is available via [`bower`](http://bower.io/search/?q=complex-js):
+
+```
+bower install --save complex-js
 ```
 
 <a name="functions-vs-operators"></a>

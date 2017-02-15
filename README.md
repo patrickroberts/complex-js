@@ -45,7 +45,7 @@ In the browser, use a script tag:
 <script type="text/javascript" src="complex.min.js"></script>
 ```
 
-Complex.js can be included as an AMD module as well, and is available via [`bower`](http://bower.io/seah/?q=complex-js):
+Complex.js can be included as an AMD module as well, and is available via [`bower`](http://bower.io/search/?q=complex-js):
 
 ```
 bower install --save complex-js

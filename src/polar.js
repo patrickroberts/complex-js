@@ -75,15 +75,15 @@ Polar.prototype = Object.create(require('./complex').prototype, {
   '/':      divDescriptor,
   isReal: nonEnumerable(function isReal() {
     return (
-      this.arg <= Number.EPSILON && this.arg >= Number.EPSILON ||
+      this.arg <= Number.EPSILON && -this.arg <= Number.EPSILON ||
       Long.withinMaxUlps(this.arg, Math.PI) ||
-      this.imag <= Number.EPSILON && this.imag >= Number.EPSILON
+      this.imag <= Number.EPSILON && -this.imag <= Number.EPSILON
     );
   }),
   isImag: nonEnumerable(function isImag() {
     return (
       Long.withinMaxUlps(this.arg < 0 ? -this.arg : this.arg, Math.PI / 2) ||
-      this.real <= Number.EPSILON && this.real >= Number.EPSILON
+      this.real <= Number.EPSILON && -this.real <= Number.EPSILON
     );
   }),
   negate: nonEnumerable(function negate() {

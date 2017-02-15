@@ -39,6 +39,6 @@ module.exports = {
     return remainder >= 0 ? transform - remainder : transform - 1 - remainder;
   },
   truncate: Math.truncate || function truncate(number = NaN) {
-    return number - (number % 1) + offset;
+    return number - (number % 1);
   },
 };

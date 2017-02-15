@@ -251,7 +251,7 @@ const Complex = module.exports = class Complex {
   static acot(complex) {
     const idz = Complex.I.divide(complex);
     // i/2 (log(1-i/z)-log(1+i/z))
-    return iz.negate().add(Complex.ONE).log().sub(iz.add(Complex.ONE).log()).divide(Complex.TWO_I);
+    return idz.negate().add(Complex.ONE).log().sub(idz.add(Complex.ONE).log()).divide(Complex.TWO_I);
   }
 
   static acosh(complex) {
@@ -412,15 +412,15 @@ const Complex = module.exports = class Complex {
 
   isReal() {
     return (
-      this.imag <= Number.EPSILON && this.imag >= Number.EPSILON ||
-      this.arg <= Number.EPSILON && this.arg >= Number.EPSILON ||
+      this.imag <= Number.EPSILON && -this.imag <= Number.EPSILON ||
+      this.arg <= Number.EPSILON && -this.arg <= Number.EPSILON ||
       Long.withinMaxUlps(this.arg, Math.PI)
     );
   }
 
   isImag() {
     return (
-      this.real <= Number.EPSILON && this.real >= Number.EPSILON ||
+      this.real <= Number.EPSILON && -this.real <= Number.EPSILON ||
       Long.withinMaxUlps(this.arg < 0 ? -this.arg : this.arg, Math.PI / 2)
     );
   }
@@ -430,7 +430,7 @@ const Complex = module.exports = class Complex {
   }
 
   conjugate() {
-    return new Complex(this.real, -this,imag, this.abs, -this.arg);
+    return new Complex(this.real, -this.imag, this.abs, -this.arg);
   }
 
   normalize() {
@@ -480,7 +480,7 @@ const Complex = module.exports = class Complex {
   }
 
   fraction() {
-    return new Cartesian(utils.remainder(this.real), utils.remainder(this.imag));
+    return new Cartesian(this.real % 1, this.imag % 1);
   }
 
   sqrt() {

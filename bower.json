@@ -1,7 +1,7 @@
 {
   "name": "complex-js",
   "description": "Complex math for the browser and Node.js",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "authors": [
     "Patrick Roberts"
   ],
@@ -13,7 +13,7 @@
     "test"
   ],
   "dependencies": {},
-  "main": "lib/complex.min.js",
+  "main": "dst/complex.min.js",
   "homepage": "https://github.com/patrickroberts/complex-js",
   "moduleType": [
     "amd",
@@ -22,6 +22,8 @@
   ],
   "keywords": [
     "complex",
-    "math"
+    "math",
+    "compiler",
+    "isomorphic"
   ]
 }

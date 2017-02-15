@@ -1,0 +1,16 @@
+{
+  "paths": {
+    "complex": {
+      "entry": "./src/complex.js",
+      "dest": "./dst"
+    },
+    "peg": {
+      "entry": "./parser/**.pegjs",
+      "dest": "./parser"
+    }
+  },
+  "names": {
+    "app": "complex.min.js",
+    "glob": "Complex"
+  }
+}

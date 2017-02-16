@@ -20,9 +20,11 @@ const mulDescriptor = utils.nonEnumerable(function multiply(that) {
   );
 });
 const divDescriptor = utils.nonEnumerable(function divide(that) {
+  const denom = that.real * that.real + that.imag * that.imag;
+
   return new Cartesian(
-    this.real / that.real + this.imag / that.imag,
-    this.imag / that.real - this.real / that.imag
+    (this.real * that.real + this.imag * that.imag) / denom,
+    (this.imag * that.real - this.real * that.imag) / denom
   );
 });
 

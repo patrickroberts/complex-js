@@ -383,9 +383,11 @@ const Complex = module.exports = class Complex {
   }
 
   divide(that) {
+    const denom = that.real * that.real + that.imag * that.imag;
+
     return new Complex(
-      this.real / that.real + this.imag / that.imag,
-      this.imag / that.real - this.real / that.imag,
+      (this.real * that.real + this.imag * that.imag) / denom,
+      (this.imag * that.real - this.real * that.imag) / denom,
       this.abs / that.abs, this.arg - that.arg
     );
   }

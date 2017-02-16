@@ -32,7 +32,7 @@ Cartesian.prototype = Object.create(require('./complex').prototype, {
     configurable: true,
     enumerable: true,
     get() {
-      return this.abs = Math.sqrt(this.real * this.real + this.imag * this.imag);
+      return this.abs = utils.hypot(this.real, this.imag);
     },
     set(value) {
       Object.defineProperty(this, 'abs', {

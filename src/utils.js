@@ -41,4 +41,7 @@ module.exports = {
   truncate: Math.truncate || function truncate(number = NaN) {
     return number - (number % 1);
   },
+  hypot: Math.hypot || function hypot(a, b) {
+    return Math.sqrt(a * a + b * b);
+  },
 };

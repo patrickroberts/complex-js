@@ -42,14 +42,14 @@ const Long = module.exports = class Long {
   }
 
   set hi(int32) {
-    this.u48 = int32 >> 16;
+    this.u48 = int32 >>> 16;
     this.u32 = int32 & 0xFFFF;
 
     return this.hi;
   }
 
   set lo(int32) {
-    this.u16 = int32 >> 16;
+    this.u16 = int32 >>> 16;
     this.u00 = int32 & 0xFFFF;
 
     return this.lo;

@@ -1,7 +1,7 @@
 {
   "name": "complex-js",
   "description": "Complex math for the browser and Node.js",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "authors": [
     "Patrick Roberts"
   ],

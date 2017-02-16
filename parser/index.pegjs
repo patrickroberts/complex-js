@@ -28,7 +28,7 @@
       return canEval ? Complex[name].apply(Complex, parameters) : 'Complex.' + name + '(' + parameters.map(cache).join() + ')';
     }
 
-    error('Expected function but \"' + name + '\" found.');
+    error('Expected function but "' + name + '" found.');
   }
 
   function getValue(id, error) {
@@ -40,7 +40,7 @@
       return Complex[name];
     }
 
-    error('Expected constant or parameter but \"' + id + '\" found.');
+    error('Expected constant or parameter but "' + id + '" found.');
   }
 
   function getOperation(left, right, operand) {

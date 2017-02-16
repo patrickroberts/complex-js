@@ -315,7 +315,7 @@ const Complex = module.exports = class Complex {
     return new Function(parameters.join(), 'return ' + result).bind(cached, Complex);
   }
 
-  constructor(real = 0, imag = 0, abs = Math.sqrt(real * real + imag * imag), arg = Math.atan2(imag, real)) {
+  constructor(real = 0, imag = 0, abs = utils.hypot(real, imag), arg = Math.atan2(imag, real)) {
     if (!(this instanceof Complex)) {
       return new Complex(real, imag, abs, arg);
     }

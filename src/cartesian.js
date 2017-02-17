@@ -28,6 +28,18 @@ const divDescriptor = utils.nonEnumerable(function divide(that) {
   );
 });
 
+Object.defineProperties(Cartesian, {
+  ZERO:    utils.nonEnumerable(new Cartesian(0, 0)),
+  ONE:     utils.nonEnumerable(new Cartesian(1, 0)),
+  NEG_ONE: utils.nonEnumerable(new Cartesian(-1, 0)),
+  I:       utils.nonEnumerable(new Cartesian(0, 1)),
+  NEG_I:   utils.nonEnumerable(new Cartesian(0, -1)),
+  TWO:     utils.nonEnumerable(new Cartesian(2, 0)),
+  TWO_I:   utils.nonEnumerable(new Cartesian(0, 2)),
+  PI:      utils.nonEnumerable(new Cartesian(Math.PI, 0)),
+  E:       utils.nonEnumerable(new Cartesian(Math.E, 0)),
+});
+
 Cartesian.prototype = Object.create(require('./complex').prototype, {
   constructor: utils.nonEnumerable(Cartesian),
   abs: {

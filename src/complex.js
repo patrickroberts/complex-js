@@ -226,32 +226,32 @@ const Complex = module.exports = class Complex {
 
   static acos(complex) {
     // -i log(z+sqrt(z^2-1))
-    return Complex.NEG_I.multiply(Complex.log(Complex.sqrt(Complex.square(complex).sub(Complex.ONE)).add(complex)));
+    return complex.square().sub(Complex.ONE).sqrt().add(complex).log().mul(Complex.NEG_I);
   }
 
   static asin(complex) {
     // -i log(iz+sqrt(1-z^2))
-    return Complex.NEG_I.multiply(Complex.log(Complex.sqrt(Complex.ONE.sub(Complex.square(complex))).add(complex.multiply(Complex.I))));
+    return Complex.ONE.sub(complex.square()).sqrt().add(complex.mul(Complex.I)).log().mul(Complex.NEG_I);
   }
 
   static atan(complex) {
-    const iz = Complex.I.multiply(complex);
+    const iz = Cartesian.I.mul(complex);
     // i/2 (log(1-iz)-log(1+iz))
-    return iz.negate().add(Complex.ONE).log().sub(iz.add(Complex.ONE).log()).divide(Complex.TWO_I);
+    return Complex.ONE.sub(iz).log().sub(iz.add(Complex.ONE).log()).div(Complex.TWO_I);
   }
 
   static asec(complex) {
-    return Complex.ONE.divide(complex).acos();
+    return Cartesian.ONE.div(complex).acos();
   }
 
   static acsc(complex) {
-    return Complex.ONE.divide(complex).asin();
+    return Cartesian.ONE.div(complex).asin();
   }
 
   static acot(complex) {
-    const idz = Complex.I.divide(complex);
+    const idz = Cartesian.I.div(complex);
     // i/2 (log(1-i/z)-log(1+i/z))
-    return idz.negate().add(Complex.ONE).log().sub(idz.add(Complex.ONE).log()).divide(Complex.TWO_I);
+    return Complex.ONE.sub(idz).log().sub(idz.add(Complex.ONE).log()).div(Complex.TWO_I);
   }
 
   static acosh(complex) {
@@ -266,20 +266,20 @@ const Complex = module.exports = class Complex {
 
   static atanh(complex) {
     // log((1+z)/(1-z))/2
-    return complex.add(Complex.ONE).divide(complex.negate().add(Complex.ONE)).log().divide(Complex.TWO);
+    return complex.add(Complex.ONE).div(Complex.ONE.sub(complex)).log().div(Complex.TWO);
   }
 
   static asech(complex) {
-    return Complex.ONE.divide(complex).acosh();
+    return Cartesian.ONE.div(complex).acosh();
   }
 
   static acsch(complex) {
-    return Complex.ONE.divide(complex).asinh();
+    return Cartesian.ONE.div(complex).asinh();
   }
 
   static acoth(complex) {
     // log((z+1)/(z-1))/2
-    return complex.add(Complex.ONE).divide(complex.sub(Complex.ONE)).log().divide(Complex.TWO);
+    return complex.add(Complex.ONE).div(complex.sub(Complex.ONE)).log().div(Complex.TWO);
   }
 
   static min() {
@@ -623,32 +623,32 @@ const Complex = module.exports = class Complex {
 
   acos() {
     // -i log(z+sqrt(z^2-1))
-    return this.square().sub(Complex.ONE).sqrt().add(this).log().multiply(Complex.NEG_I);
+    return this.square().sub(Complex.ONE).sqrt().add(this).log().mul(Complex.NEG_I);
   }
 
   asin() {
     // -i log(iz+sqrt(1-z^2))
-    return Complex.ONE.sub(this.square()).sqrt().add(this.multiply(Complex.I)).log().multiply(Complex.NEG_I);
+    return Complex.ONE.sub(this.square()).sqrt().add(this.mul(Complex.I)).log().mul(Complex.NEG_I);
   }
 
   atan() {
-    const iz = this.multiply(Complex.I);
+    const iz = this.mul(Complex.I);
     // i/2 (log(1-iz)-log(1+iz))
-    return iz.negate().add(Complex.ONE).log().sub(iz.add(Complex.ONE).log()).divide(Complex.TWO_I);
+    return Complex.ONE.sub(iz).log().sub(iz.add(Complex.ONE).log()).div(Complex.TWO_I);
   }
 
   asec() {
-    return Complex.ONE.divide(this).acos();
+    return Cartesian.ONE.div(this).acos();
   }
 
   acsc() {
-    return Complex.ONE.divide(this).asin();
+    return Cartesian.ONE.div(this).asin();
   }
 
   acot() {
-    const idz = Complex.I.divide(this);
+    const idz = Complex.I.div(this);
     // i/2 (log(1-i/z)-log(1+i/z))
-    return idz.negate().add(Complex.ONE).log().sub(idz.add(Complex.ONE).log()).divide(Complex.TWO_I);
+    return Complex.ONE.sub(idz).log().sub(idz.add(Complex.ONE).log()).div(Complex.TWO_I);
   }
 
   acosh() {
@@ -663,20 +663,20 @@ const Complex = module.exports = class Complex {
 
   atanh() {
     // log((1+z)/(1-z))/2
-    return this.add(Complex.ONE).divide(this.negate().add(Complex.ONE)).log().divide(Complex.TWO);
+    return this.add(Complex.ONE).div(Complex.ONE.sub(this)).log().div(Complex.TWO);
   }
 
   asech() {
-    return Complex.ONE.divide(this).acosh();
+    return Cartesian.ONE.div(this).acosh();
   }
 
   acsch() {
-    return Complex.ONE.divide(this).asinh();
+    return Cartesian.ONE.div(this).asinh();
   }
 
   acoth() {
     // log((z+1)/(z-1))/2
-    return this.add(Complex.ONE).divide(this.sub(Complex.ONE)).log().divide(Complex.TWO);
+    return this.add(Complex.ONE).div(this.sub(Complex.ONE)).log().div(Complex.TWO);
   }
 }
 

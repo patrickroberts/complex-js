@@ -27,6 +27,18 @@ const divDescriptor = nonEnumerable(function divide(that) {
   return new Polar(this.abs / that.abs, this.arg - that.arg);
 });
 
+Object.defineProperties(Polar, {
+  ZERO:    nonEnumerable(new Polar(0, 0)),
+  ONE:     nonEnumerable(new Polar(1, 0)),
+  NEG_ONE: nonEnumerable(new Polar(1, Math.PI)),
+  I:       nonEnumerable(new Polar(1, Math.PI / 2)),
+  NEG_I:   nonEnumerable(new Polar(1, -Math.PI / 2)),
+  TWO:     nonEnumerable(new Polar(2, 0)),
+  TWO_I:   nonEnumerable(new Polar(2, Math.PI / 2)),
+  PI:      nonEnumerable(new Polar(Math.PI, 0)),
+  E:       nonEnumerable(new Polar(Math.E, 0)),
+});
+
 Polar.prototype = Object.create(require('./complex').prototype, {
   constructor: nonEnumerable(Polar),
   real: {

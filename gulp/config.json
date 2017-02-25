@@ -7,6 +7,12 @@
     "peg": {
       "entry": "./parser/**.pegjs",
       "dest": "./parser"
+    },
+    "test": {
+      "entry": "./test/**/*.js"
+    },
+    "cover": {
+      "entry": "./src/**/*.js"
     }
   },
   "names": {

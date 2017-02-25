@@ -1,3 +1,3 @@
 const gulp = require('gulp');
 
-gulp.task('default', ['browserify']);
+gulp.task('default', ['test']);

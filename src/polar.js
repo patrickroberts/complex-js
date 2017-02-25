@@ -2,7 +2,7 @@
 
 'use strict';
 
-const nonEnumerable = require('./utils').nonEnumerable;
+const utils = require('./utils');
 const Long = require('./long');
 
 const Polar = module.exports = function Polar(abs = 0, arg = 0) {
@@ -14,33 +14,33 @@ const Polar = module.exports = function Polar(abs = 0, arg = 0) {
   this.arg = arg !== 0 ? -((-arg + (abs >= 0 ? Math.PI : 0)) % (Math.PI * 2) - Math.PI) : abs < 0 ? Math.PI : 0;
 };
 
-const equDescriptor = nonEnumerable(function equals(that, maxUlps = 4) {
+const equDescriptor = utils.nonEnumerable(function equals(that, maxUlps = 4) {
   return (
     Long.withinMaxUlps(this.abs, that.abs, maxUlps) && Long.withinMaxUlps(this.arg, that.arg, maxUlps) ||
     Long.withinMaxUlps(this.real, that.real, maxUlps) && Long.withinMaxUlps(this.imag, that.imag, maxUlps)
   );
 });
-const mulDescriptor = nonEnumerable(function multiply(that) {
+const mulDescriptor = utils.nonEnumerable(function multiply(that) {
   return new Polar(this.abs * that.abs, this.arg + that.arg);
 });
-const divDescriptor = nonEnumerable(function divide(that) {
+const divDescriptor = utils.nonEnumerable(function divide(that) {
   return new Polar(this.abs / that.abs, this.arg - that.arg);
 });
 
 Object.defineProperties(Polar, {
-  ZERO:    nonEnumerable(new Polar(0, 0)),
-  ONE:     nonEnumerable(new Polar(1, 0)),
-  NEG_ONE: nonEnumerable(new Polar(1, Math.PI)),
-  I:       nonEnumerable(new Polar(1, Math.PI / 2)),
-  NEG_I:   nonEnumerable(new Polar(1, -Math.PI / 2)),
-  TWO:     nonEnumerable(new Polar(2, 0)),
-  TWO_I:   nonEnumerable(new Polar(2, Math.PI / 2)),
-  PI:      nonEnumerable(new Polar(Math.PI, 0)),
-  E:       nonEnumerable(new Polar(Math.E, 0)),
+  ZERO:    utils.nonEnumerable(new Polar(0, 0)),
+  ONE:     utils.nonEnumerable(new Polar(1, 0)),
+  NEG_ONE: utils.nonEnumerable(new Polar(1, Math.PI)),
+  I:       utils.nonEnumerable(new Polar(1, Math.PI / 2)),
+  NEG_I:   utils.nonEnumerable(new Polar(1, -Math.PI / 2)),
+  TWO:     utils.nonEnumerable(new Polar(2, 0)),
+  TWO_I:   utils.nonEnumerable(new Polar(2, Math.PI / 2)),
+  PI:      utils.nonEnumerable(new Polar(Math.PI, 0)),
+  E:       utils.nonEnumerable(new Polar(Math.E, 0)),
 });
 
 Polar.prototype = Object.create(require('./complex').prototype, {
-  constructor: nonEnumerable(Polar),
+  constructor: utils.nonEnumerable(Polar),
   real: {
     configurable: true,
     enumerable: true,
@@ -85,32 +85,32 @@ Polar.prototype = Object.create(require('./complex').prototype, {
   divide:   divDescriptor,
   div:      divDescriptor,
   '/':      divDescriptor,
-  isReal: nonEnumerable(function isReal() {
+  isReal: utils.nonEnumerable(function isReal() {
     return (
-      this.arg <= Number.EPSILON && -this.arg <= Number.EPSILON ||
+      this.arg <= utils.EPSILON && -this.arg <= utils.EPSILON ||
       Long.withinMaxUlps(this.arg, Math.PI) ||
-      this.imag <= Number.EPSILON && -this.imag <= Number.EPSILON
+      this.imag <= utils.EPSILON && -this.imag <= utils.EPSILON
     );
   }),
-  isImag: nonEnumerable(function isImag() {
+  isImag: utils.nonEnumerable(function isImag() {
     return (
       Long.withinMaxUlps(this.arg < 0 ? -this.arg : this.arg, Math.PI / 2) ||
-      this.real <= Number.EPSILON && -this.real <= Number.EPSILON
+      this.real <= utils.EPSILON && -this.real <= utils.EPSILON
     );
   }),
-  negate: nonEnumerable(function negate() {
+  negate: utils.nonEnumerable(function negate() {
     return new Polar(-this.abs, this.arg);
   }),
-  conjugate: nonEnumerable(function conjugate() {
+  conjugate: utils.nonEnumerable(function conjugate() {
     return new Polar(this.abs, -this.arg);
   }),
-  normalize: nonEnumerable(function normalize() {
+  normalize: utils.nonEnumerable(function normalize() {
     return new Polar(this.abs / this.abs, this.arg);
   }),
-  square: nonEnumerable(function square() {
+  square: utils.nonEnumerable(function square() {
     return new Polar(this.abs * this.abs, this.arg * 2);
   }),
-  cube: nonEnumerable(function cube() {
+  cube: utils.nonEnumerable(function cube() {
     return new Polar(this.abs * this.abs * this.abs, this.arg * 3);
   }),
 });

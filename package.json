@@ -9,7 +9,7 @@
   ],
   "author": "Patrick Roberts",
   "main": "./dst/complex.min",
-  "version": "4.0.5",
+  "version": "5.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/patrickroberts/complex-js.git"
@@ -19,7 +19,10 @@
     "npm": "^4.0.0"
   },
   "scripts": {
-    "prepublishOnly": "gulp"
+    "prepublishOnly": "gulp",
+    "test": "gulp test",
+    "cover": "gulp cover",
+    "build": "gulp browserify"
   },
   "license": "MIT",
   "devDependencies": {
@@ -27,7 +30,10 @@
     "babel-preset-es2016": "^6.22.0",
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
+    "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
     "gulp-pegjs": "github:tapmodo/gulp-pegjs",
     "gulp-sourcemaps": "^2.4.1",
     "gulp-uglify": "^2.0.1",

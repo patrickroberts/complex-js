@@ -18,7 +18,9 @@
     const name = id.toLowerCase();
     const canEval = parameters.every(isComplex);
 
-    if (Complex.hasOwnProperty(name) && typeof Complex[name] === 'function' && name !== 'constructor') {
+    if (options.parameters.indexOf(id) >= 0) {
+      return id + '(' + parameters.map(cache).join() + ')';
+    } else if (Complex.hasOwnProperty(name) && typeof Complex[name] === 'function' && name !== 'constructor') {
       if (Complex[name].length === 1) {
         const parameter = parameters[0];
 

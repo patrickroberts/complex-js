@@ -11,37 +11,29 @@ module.exports = {
       writable: true,
     };
   },
-  isFinite: global.isFinite || function isFinite(number) {
-    return +number < Infinity && -number > Infinity;
-  },
-  isNaN: global.isNaN || function isNaN(number) {
-    number = +number;
-
-    return value !== value;
-  },
-  sign: Math.sign || function sign(number = NaN) {
+  isFinite: global.isFinite,
+  isNaN: global.isNaN,
+  floor: Math.floor,
+  ceil: Math.ceil,
+  round: Math.round,
+  sign: Math.sign || function sign(number) {
     return number > 0 ? 1 : number < 0 ? -1 : number == 0 ? 0 : NaN;
   },
-  floor: Math.floor || function floor(number = NaN) {
-    const remainder = number % 1;
-
-    return remainder >= 0 ? number - remainder : number - (1 - remainder) % 1;
-  },
-  ceil: Math.ceil || function ceil(number = NaN) {
-    const remainder = number % 1;
-
-    return remainder >= 0 ? number + (1 - remainder) % 1 : number - remainder;
-  },
-  round: Math.round || function round(number = NaN) {
-    const transform = number + 0.5;
-    const remainder = transform % 1;
-
-    return remainder >= 0 ? transform - remainder : transform - 1 - remainder;
-  },
-  truncate: Math.truncate || function truncate(number = NaN) {
+  truncate: Math.trunc || function truncate(number) {
     return number - (number % 1);
   },
   hypot: Math.hypot || function hypot(a, b) {
     return Math.sqrt(a * a + b * b);
   },
+  cosh: Math.cosh || function cosh(number) {
+    const exp = Math.exp(number);
+
+    return (exp + 1 / exp) / 2;
+  },
+  sinh: Math.sinh || function sinh(number) {
+    const exp = Math.exp(number);
+
+    return (exp - 1 / exp) / 2;
+  },
+  EPSILON: Number.EPSILON || 2.220446049250313e-16,
 };

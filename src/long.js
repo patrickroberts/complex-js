@@ -23,7 +23,7 @@ const Long = module.exports = class Long {
 
     const {hi, lo} = Long.fromFloat64(+a).sub(Long.fromFloat64(+b));
 
-    return hi === 0 && lo <= maxUlps || ~hi === 0 && ~lo <= maxUlps;
+    return hi === 0 && lo <= maxUlps || ~hi === 0 && -lo <= maxUlps;
   }
 
   constructor(u48, u32, u16, u00) {
@@ -88,13 +88,15 @@ const Long = module.exports = class Long {
   sub(that) {
     return this.add(that.negate().add(Long.ONE));
   }
-}
-
-Long.ONE = new Long(0x0000, 0x0000, 0x0000, 0x0001);
+};
 
 const arrayBuffer = new ArrayBuffer(8);
 
-Object.defineProperty(Long, 'fromFloat64', utils.nonEnumerable(
+Object.defineProperties(Long, {
+  fromFloat64: utils.nonEnumerable(
     Long.fromFloat64.bind(Long, new Float64Array(arrayBuffer), new Uint16Array(arrayBuffer))
-  )
-);
+  ),
+  ONE: utils.nonEnumerable(
+    new Long(0x0000, 0x0000, 0x0000, 0x0001)
+  ),
+});

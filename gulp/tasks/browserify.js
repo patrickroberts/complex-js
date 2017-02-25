@@ -18,7 +18,7 @@ gulp.task('browserify', ['peg'], function () {
     transform: [
       babelify.configure({
         presets: ['es2015', 'es2016'],
-        plugins: [ require('../plugins/babel-transform-strip-class-call-check') ],
+        plugins: [],
         sourceMapsAbsolute: true,
       }),
     ],

@@ -1,0 +1,8 @@
+docs
+functions
+internal
+methods
+.gitignore
+complex.ts
+rollup.config.js
+typedoc.json

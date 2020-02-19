@@ -1,4 +1,4 @@
-<h1 style="text-align:center"><img src="https://i.imgur.com/XBOpBt1.png"></h1>
+![complex-js logo](https://raw.githubusercontent.com/patrickroberts/complex-js/assets/logo.png)
 
 ## Overview
 
@@ -26,7 +26,7 @@ ES2015 Module:
 import Complex from 'complex-js';
 ```
 
-Browser Global:
+Browser:
 
 ```html
 <script src="https://unpkg.com/complex-js"></script>

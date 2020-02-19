@@ -1,5 +1,5 @@
 /** @internal */
-enum Mask {
+const enum Mask {
   HAS_NONE = 0,
   HAS_REAL = 1,
   HAS_IMAG = HAS_REAL << 1,

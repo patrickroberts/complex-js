@@ -4,5 +4,5 @@
   "mode": "file",
   "excludeExternals": true,
   "excludeNotExported": true,
-  "sourcefile-url-prefix": "https://github.com/patrickroberts/complex-js/blob/master/src/"
+  "sourcefile-url-prefix": "https://github.com/patrickroberts/complex-js/blob/master/"
 }

@@ -42,9 +42,10 @@ requirejs(['complex-js'], function (Complex) {
 
 ## Documentation
 
-Available on [gh-pages](http://patrickroberts.github.io/complex-js/).
+API reference available on [github.io](http://patrickroberts.github.io/complex-js/).
 
 ## License
 
 Copyright (c) 2020 Patrick Roberts
+
 MIT

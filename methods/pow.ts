@@ -5,6 +5,7 @@ import getImag from './imag';
 import getAbs from './abs';
 import getArg from './arg';
 import divImpl from './div';
+import fromImpl from '../functions/from';
 import squareImpl from '../functions/square';
 import cubeImpl from '../functions/cube';
 
@@ -19,11 +20,9 @@ export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, 
   }
 
   if (d === 0) {
-    const o = Complex['1'];
-
     switch (c) {
-      case -1: return divImpl(Complex, o, w);
-      case 0: return new Complex(o._real, o._imag, o._abs, o._arg, o._mask);
+      case -1: return divImpl(Complex, fromImpl(Complex, 1), w);
+      case 0: return fromImpl(Complex, 1);
       case 1: return new Complex(w._real, w._imag, w._abs, w._arg, w._mask);
       case 2: return squareImpl(Complex, w);
       case 3: return cubeImpl(Complex, w);

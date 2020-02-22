@@ -12,9 +12,4 @@ export default interface Complex {
 /** @internal */
 export interface ComplexConstructor<T extends Complex> {
   new (real: number, imag: number, abs: number, arg: number, mask: Mask): T;
-  readonly '0': T;
-  readonly '1': T;
-  readonly 'I': T;
-  readonly 'E': T;
-  readonly 'PI': T;
 }

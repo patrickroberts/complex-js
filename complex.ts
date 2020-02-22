@@ -24,6 +24,12 @@ import tanImpl from './functions/tan';
 import secImpl from './functions/sec';
 import cscImpl from './functions/csc';
 import cotImpl from './functions/cot';
+import coshImpl from './functions/cosh';
+import sinhImpl from './functions/sinh';
+import tanhImpl from './functions/tanh';
+import sechImpl from './functions/sech';
+import cschImpl from './functions/csch';
+import cothImpl from './functions/coth';
 import toStringImpl from './methods/toString';
 import addImpl from './methods/add';
 import subImpl from './methods/sub';
@@ -222,6 +228,42 @@ export default class Complex {
   public static cot (real: number, imag?: number): Complex;
   public static cot (z: Complex | number, imag?: number): Complex {
     return cotImpl(Complex, z, imag);
+  }
+
+  public static cosh (z: Complex | number): Complex;
+  public static cosh (real: number, imag?: number): Complex;
+  public static cosh (z: Complex | number, imag?: number): Complex {
+    return coshImpl(Complex, z, imag);
+  }
+
+  public static sinh (z: Complex | number): Complex;
+  public static sinh (real: number, imag?: number): Complex;
+  public static sinh (z: Complex | number, imag?: number): Complex {
+    return sinhImpl(Complex, z, imag);
+  }
+
+  public static tanh (z: Complex | number): Complex;
+  public static tanh (real: number, imag?: number): Complex;
+  public static tanh (z: Complex | number, imag?: number): Complex {
+    return tanhImpl(Complex, z, imag);
+  }
+
+  public static sech (z: Complex | number): Complex;
+  public static sech (real: number, imag?: number): Complex;
+  public static sech (z: Complex | number, imag?: number): Complex {
+    return sechImpl(Complex, z, imag);
+  }
+
+  public static csch (z: Complex | number): Complex;
+  public static csch (real: number, imag?: number): Complex;
+  public static csch (z: Complex | number, imag?: number): Complex {
+    return cschImpl(Complex, z, imag);
+  }
+
+  public static coth (z: Complex | number): Complex;
+  public static coth (real: number, imag?: number): Complex;
+  public static coth (z: Complex | number, imag?: number): Complex {
+    return cothImpl(Complex, z, imag);
   }
 
   public toString (format?: string): string {

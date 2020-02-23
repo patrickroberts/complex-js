@@ -13,7 +13,7 @@ export default function coth<T extends Complex> (Complex: ComplexConstructor<T>,
   }
 
   if (zImag === 0) {
-    const zCoth = -Math.sinh(2 * zReal) / (Math.cosh(2 * zReal) - 1);
+    const zCoth = -Math.sinh(2 * zReal) / (1 - Math.cosh(2 * zReal));
 
     return new Complex(
       zCoth,
@@ -25,7 +25,7 @@ export default function coth<T extends Complex> (Complex: ComplexConstructor<T>,
   }
 
   if (zReal === 0) {
-    const zCoth = Math.sin(2 * zImag) / (1 - Math.cos(2 * zImag));
+    const zCoth = Math.sin(2 * zImag) / (Math.cos(2 * zImag) - 1);
 
     return new Complex(
       0,
@@ -36,7 +36,7 @@ export default function coth<T extends Complex> (Complex: ComplexConstructor<T>,
     );
   }
 
-  const zCothDenom = Math.cosh(2 * zReal) - Math.cos(2 * zImag);
+  const zCothDenom = Math.cos(2 * zImag) - Math.cosh(2 * zReal);
 
   return new Complex(
     -Math.sinh(2 * zReal) / zCothDenom,

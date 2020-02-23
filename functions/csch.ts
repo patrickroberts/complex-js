@@ -13,7 +13,7 @@ export default function sech<T extends Complex> (Complex: ComplexConstructor<T>,
   }
 
   if (zImag === 0) {
-    const zCsch = -2 * Math.sinh(zReal) / (Math.cosh(2 * zReal) - 1);
+    const zCsch = -2 * Math.sinh(zReal) / (1 - Math.cosh(2 * zReal));
 
     return new Complex(
       zCsch,
@@ -25,7 +25,7 @@ export default function sech<T extends Complex> (Complex: ComplexConstructor<T>,
   }
 
   if (zReal === 0) {
-    const zCsch = 2 * Math.sin(zImag) / (1 - Math.cos(2 * zImag));
+    const zCsch = 2 * Math.sin(zImag) / (Math.cos(2 * zImag) - 1);
 
     return new Complex(
       0,
@@ -36,7 +36,7 @@ export default function sech<T extends Complex> (Complex: ComplexConstructor<T>,
     );
   }
 
-  const zCschDenom = Math.cosh(2 * zReal) - Math.cos(2 * zImag);
+  const zCschDenom = Math.cos(2 * zImag) - Math.cosh(2 * zReal);
 
   return new Complex(
     -2 * Math.sinh(zReal) * Math.cos(zImag) / zCschDenom,

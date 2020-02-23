@@ -1,4 +1,4 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import absImpl from '../internal/abs';
 import argImpl from '../internal/arg';
@@ -22,9 +22,9 @@ export default function sign<T extends Complex> (Complex: ComplexConstructor<T>,
     return new Complex(zReal / zAbs, zImag / zAbs, 1, zArg, zMask | Mask.HAS_ABS);
   }
 
-  const arg = typeof z === 'number'
+  const zSignArg = typeof z === 'number'
     ? argImpl(zReal, zImag)
     : getArg(z);
 
-  return new Complex(NaN, NaN, 1, arg, Mask.HAS_POLAR);
+  return new Complex(NaN, NaN, 1, zSignArg, Mask.HAS_POLAR);
 }

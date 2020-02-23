@@ -1,4 +1,4 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 
 export default function polar<T extends Complex> (Complex: ComplexConstructor<T>, abs: number, arg: number = 0): T {

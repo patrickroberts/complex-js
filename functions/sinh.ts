@@ -1,4 +1,4 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import getReal from '../methods/real';
 import getImag from '../methods/imag';

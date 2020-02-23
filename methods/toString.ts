@@ -1,4 +1,4 @@
-import Complex from '../internal/complex';
+import { Complex } from '../internal/complex';
 import getReal from './real';
 import getImag from './imag';
 import getAbs from './abs';

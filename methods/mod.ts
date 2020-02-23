@@ -1,13 +1,13 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
-import truncImpl from '../functions/trunc';
-import divImpl from './div';
-import mulImpl from './mul';
-import subImpl from './sub';
+import { Complex, ComplexConstructor } from '../internal/complex';
+import trunc from '../functions/trunc';
+import div from './div';
+import mul from './mul';
+import sub from './sub';
 
 export default function mod<T extends Complex> (Complex: ComplexConstructor<T>, dividend: Complex, divisor: Complex | number, imag: number = 0): T {
   // dividend % divisor = dividend - (trunc(dividend / divisor) * divisor)
-  const q = divImpl(Complex, dividend, divisor, imag);
-  const p = mulImpl(Complex, truncImpl(Complex, q), divisor, imag);
+  const q = div(Complex, dividend, divisor, imag);
+  const p = mul(Complex, trunc(Complex, q), divisor, imag);
 
-  return subImpl(Complex, dividend, p);
+  return sub(Complex, dividend, p);
 }

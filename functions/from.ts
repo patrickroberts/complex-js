@@ -1,4 +1,4 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import absImpl from '../internal/abs';
 import argImpl from '../internal/arg';

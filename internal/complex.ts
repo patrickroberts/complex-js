@@ -1,7 +1,7 @@
 import Mask from './mask';
 
 /** @internal */
-export default interface Complex {
+export interface Complex {
   _real: number;
   _imag: number;
   _arg: number;

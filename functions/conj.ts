@@ -1,4 +1,4 @@
-import Complex, { ComplexConstructor } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 
 export default function conj<T extends Complex> (Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {

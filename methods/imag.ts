@@ -1,4 +1,4 @@
-import Complex from '../internal/complex';
+import { Complex } from '../internal/complex';
 import Mask from '../internal/mask';
 import imagImpl from '../internal/imag';
 

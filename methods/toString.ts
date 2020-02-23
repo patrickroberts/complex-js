@@ -101,7 +101,7 @@ function stringify (z: Complex, format: Format): string {
       return padLeft(plus(pound(str)), format.width, ' ');
     }
 
-    if (!str.startsWith('-')) {
+    if (!startsWith(str, '-')) {
       return plus(pound(padLeft(str, format.width, '0')));
     }
 
@@ -109,7 +109,7 @@ function stringify (z: Complex, format: Format): string {
   }
 
   function plus (str: string) {
-    if (!format.plus || str.startsWith('-')) return str;
+    if (!format.plus || startsWith(str, '-')) return str;
     return '+' + str;
   }
 
@@ -118,7 +118,7 @@ function stringify (z: Complex, format: Format): string {
 
     const base = '0' + format.radix;
 
-    if (!str.startsWith('-')) return base + str;
+    if (!startsWith(str, '-')) return base + str;
     return '-' + base + str.slice(1);
   }
 }
@@ -147,4 +147,8 @@ function padded (targetLength: number, padString: string): string {
   }
 
   return padString.slice(0, targetLength);
+}
+
+function startsWith (sourceString: string, searchString: string): boolean {
+  return sourceString.slice(0, searchString.length) === searchString;
 }

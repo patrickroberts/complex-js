@@ -1,3 +1,4 @@
+import { _real, _imag, _abs, _arg, _mask } from './internal/complex';
 import Mask from './internal/mask';
 import realImpl from './methods/real';
 import imagImpl from './methods/imag';
@@ -54,23 +55,23 @@ export default class Complex {
     // choose branch cut as the interval (-pi, pi]
     if (mask & Mask.HAS_ARG) arg = Math.PI - ((Math.PI - arg) % (Math.PI * 2));
 
-    this._real = real;
-    this._imag = imag;
-    this._abs = abs;
-    this._arg = arg;
-    this._mask = mask;
+    this[_real] = real;
+    this[_imag] = imag;
+    this[_abs] = abs;
+    this[_arg] = arg;
+    this[_mask] = mask;
   }
 
   /** @internal */
-  public _real: number;
+  public [_real]: number;
   /** @internal */
-  public _imag: number;
+  public [_imag]: number;
   /** @internal */
-  public _abs: number;
+  public [_abs]: number;
   /** @internal */
-  public _arg: number;
+  public [_arg]: number;
   /** @internal */
-  public _mask: Mask;
+  public [_mask]: Mask;
 
   public get real (): number {
     return realImpl(this);

@@ -1,4 +1,4 @@
-import { Complex, ComplexConstructor, _real, _imag, _abs, _arg, _mask } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import absImpl from '../internal/abs';
 import argImpl from '../internal/arg';
@@ -11,7 +11,7 @@ export default function sign<T extends Complex> (Complex: ComplexConstructor<T>,
   if (typeof z === 'number') {
     zReal = z; zImag = imag; zAbs = absImpl(z, imag); zArg = NaN; zMask = Mask.HAS_CARTESIAN;
   } else {
-    zReal = z[_real]; zImag = z[_imag]; zAbs = getAbs(z); zArg = z[_arg]; zMask = z[_mask];
+    zReal = z._real; zImag = z._imag; zAbs = getAbs(z); zArg = z._arg; zMask = z._mask;
   }
 
   if (zAbs === 0) {

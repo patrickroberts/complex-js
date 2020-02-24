@@ -1,4 +1,4 @@
-import { Complex, ComplexConstructor, _real, _imag, _abs, _arg, _mask } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import getReal from './real';
 import getImag from './imag';
@@ -10,7 +10,7 @@ export default function mul<T extends Complex> (Complex: ComplexConstructor<T>, 
     rhs = new Complex(rhs, imag, NaN, NaN, Mask.HAS_CARTESIAN);
   }
 
-  const mask = lhs[_mask] & rhs[_mask];
+  const mask = lhs._mask & rhs._mask;
 
   switch (mask) {
     case Mask.HAS_ALL:
@@ -18,17 +18,17 @@ export default function mul<T extends Complex> (Complex: ComplexConstructor<T>, 
     case Mask.HAS_CARTESIAN | Mask.HAS_ARG:
     case Mask.HAS_CARTESIAN:
       return new Complex(
-        lhs[_real] * rhs[_real] - lhs[_imag] * rhs[_imag],
-        lhs[_imag] * rhs[_real] + lhs[_real] * rhs[_imag],
-        lhs[_abs] * rhs[_abs],
-        lhs[_arg] + rhs[_arg],
+        lhs._real * rhs._real - lhs._imag * rhs._imag,
+        lhs._imag * rhs._real + lhs._real * rhs._imag,
+        lhs._abs * rhs._abs,
+        lhs._arg + rhs._arg,
         mask
       );
     case Mask.HAS_REAL:
     case Mask.HAS_IMAG:
       return new Complex(
         getReal(lhs) * getReal(rhs) - getImag(lhs) * getImag(rhs),
-        lhs[_imag] * rhs[_real] + lhs[_real] * rhs[_imag],
+        lhs._imag * rhs._real + lhs._real * rhs._imag,
         NaN,
         NaN,
         Mask.HAS_CARTESIAN

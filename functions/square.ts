@@ -1,4 +1,4 @@
-import { Complex, ComplexConstructor, _real, _imag, _abs, _arg, _mask } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 
 export default function square<T extends Complex> (Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
@@ -7,7 +7,7 @@ export default function square<T extends Complex> (Complex: ComplexConstructor<T
   if (typeof z === 'number') {
     zReal = z; zImag = imag; zAbs = NaN; zArg = NaN; zMask = Mask.HAS_CARTESIAN;
   } else {
-    zReal = z[_real]; zImag = z[_imag]; zAbs = z[_abs]; zArg = z[_arg]; zMask = z[_mask];
+    zReal = z._real; zImag = z._imag; zAbs = z._abs; zArg = z._arg; zMask = z._mask;
   }
 
   const real2 = zReal * zReal;

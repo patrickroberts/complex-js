@@ -1,4 +1,4 @@
-import { Complex, ComplexConstructor, _real, _imag, _abs, _arg, _mask } from '../internal/complex';
+import { Complex, ComplexConstructor } from '../internal/complex';
 import Mask from '../internal/mask';
 import getReal from './real';
 import getImag from './imag';
@@ -23,7 +23,7 @@ export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, 
     switch (c) {
       case -1: return div(Complex, from(Complex, 1), w);
       case 0: return from(Complex, 1);
-      case 1: return new Complex(w[_real], w[_imag], w[_abs], w[_arg], w[_mask]);
+      case 1: return new Complex(w._real, w._imag, w._abs, w._arg, w._mask);
       case 2: return square(Complex, w);
       case 3: return cube(Complex, w);
     }

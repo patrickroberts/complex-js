@@ -1,10 +1,14 @@
 import Mask from './internal/mask';
-import realImpl from './methods/real';
-import imagImpl from './methods/imag';
-import absImpl from './methods/abs';
-import argImpl from './methods/arg';
+import getRealImpl from './methods/real';
+import getImagImpl from './methods/imag';
+import getAbsImpl from './methods/abs';
+import getArgImpl from './methods/arg';
 import fromImpl from './functions/from';
 import polarImpl from './functions/polar';
+import realImpl from './functions/real';
+import imagImpl from './functions/imag';
+import absImpl from './functions/abs';
+import argImpl from './functions/arg';
 import negImpl from './functions/neg';
 import conjImpl from './functions/conj';
 import signImpl from './functions/sign';
@@ -14,6 +18,8 @@ import roundImpl from './functions/round';
 import truncImpl from './functions/trunc';
 import notImpl from './functions/not';
 import randomImpl from './functions/random';
+import sqrtImpl from './functions/sqrt';
+import cbrtImpl from './functions/cbrt';
 import squareImpl from './functions/square';
 import cubeImpl from './functions/cube';
 import expImpl from './functions/exp';
@@ -21,15 +27,15 @@ import logImpl from './functions/log';
 import cosImpl from './functions/cos';
 import sinImpl from './functions/sin';
 import tanImpl from './functions/tan';
-import secImpl from './functions/sec';
-import cscImpl from './functions/csc';
-import cotImpl from './functions/cot';
+import acosImpl from './functions/acos';
+import asinImpl from './functions/asin';
+import atanImpl from './functions/atan';
 import coshImpl from './functions/cosh';
 import sinhImpl from './functions/sinh';
 import tanhImpl from './functions/tanh';
-import sechImpl from './functions/sech';
-import cschImpl from './functions/csch';
-import cothImpl from './functions/coth';
+import acoshImpl from './functions/acosh';
+import asinhImpl from './functions/asinh';
+import atanhImpl from './functions/atanh';
 import toStringImpl from './methods/toString';
 import addImpl from './methods/add';
 import subImpl from './methods/sub';
@@ -73,26 +79,32 @@ export default class Complex {
   public _mask: Mask;
 
   public get real (): number {
-    return realImpl(this);
+    return getRealImpl(this);
   }
 
   public get imag (): number {
-    return imagImpl(this);
+    return getImagImpl(this);
   }
 
   public get abs (): number {
-    return absImpl(this);
+    return getAbsImpl(this);
   }
 
   public get arg (): number {
-    return argImpl(this);
+    return getArgImpl(this);
   }
 
   public static readonly '0' = Complex.from(0);
   public static readonly '1' = Complex.from(1);
   public static readonly 'I' = Complex.from(0, 1);
   public static readonly 'E' = Complex.from(Math.E);
+  public static readonly 'LN2' = Complex.from(Math.LN2);
+  public static readonly 'LN10' = Complex.from(Math.LN10);
+  public static readonly 'LOG2E' = Complex.from(Math.LOG2E);
+  public static readonly 'LOG10E' = Complex.from(Math.LOG10E);
   public static readonly 'PI' = Complex.from(Math.PI);
+  public static readonly 'SQRT1_2' = Complex.from(Math.SQRT1_2);
+  public static readonly 'SQRT2' = Complex.from(Math.SQRT2);
 
   public static from (real: number, imag?: number): Complex;
   public static from (z: Complex | number): Complex;
@@ -106,6 +118,30 @@ export default class Complex {
 
   public static polar (abs: number, arg?: number): Complex {
     return polarImpl(Complex, abs, arg);
+  }
+
+  public static real (z: Complex | number): Complex;
+  public static real (real: number, imag?: number): Complex;
+  public static real (z: Complex | number, imag?: number): Complex {
+    return realImpl(Complex, z, imag);
+  }
+
+  public static imag (z: Complex | number): Complex;
+  public static imag (real: number, imag?: number): Complex;
+  public static imag (z: Complex | number, imag?: number): Complex {
+    return imagImpl(Complex, z, imag);
+  }
+
+  public static abs (z: Complex | number): Complex;
+  public static abs (real: number, imag?: number): Complex;
+  public static abs (z: Complex | number, imag?: number): Complex {
+    return absImpl(Complex, z, imag);
+  }
+
+  public static arg (z: Complex | number): Complex;
+  public static arg (real: number, imag?: number): Complex;
+  public static arg (z: Complex | number, imag?: number): Complex {
+    return argImpl(Complex, z, imag);
   }
 
   public static neg (z: Complex | number): Complex;
@@ -170,6 +206,18 @@ export default class Complex {
     return randomImpl(Complex);
   }
 
+  public static sqrt (z: Complex | number): Complex;
+  public static sqrt (real: number, imag?: number): Complex;
+  public static sqrt (z: Complex | number, imag?: number): Complex {
+    return sqrtImpl(Complex, z, imag);
+  }
+
+  public static cbrt (z: Complex | number): Complex;
+  public static cbrt (real: number, imag?: number): Complex;
+  public static cbrt (z: Complex | number, imag?: number): Complex {
+    return cbrtImpl(Complex, z, imag);
+  }
+
   public static square (z: Complex | number): Complex;
   public static square (real: number, imag?: number): Complex;
   public static square (z: Complex | number, imag?: number): Complex {
@@ -212,22 +260,22 @@ export default class Complex {
     return tanImpl(Complex, z, imag);
   }
 
-  public static sec (z: Complex | number): Complex;
-  public static sec (real: number, imag?: number): Complex;
-  public static sec (z: Complex | number, imag?: number): Complex {
-    return secImpl(Complex, z, imag);
+  public static acos (z: Complex | number): Complex;
+  public static acos (real: number, imag?: number): Complex;
+  public static acos (z: Complex | number, imag?: number): Complex {
+    return acosImpl(Complex, z, imag);
   }
 
-  public static csc (z: Complex | number): Complex;
-  public static csc (real: number, imag?: number): Complex;
-  public static csc (z: Complex | number, imag?: number): Complex {
-    return cscImpl(Complex, z, imag);
+  public static asin (z: Complex | number): Complex;
+  public static asin (real: number, imag?: number): Complex;
+  public static asin (z: Complex | number, imag?: number): Complex {
+    return asinImpl(Complex, z, imag);
   }
 
-  public static cot (z: Complex | number): Complex;
-  public static cot (real: number, imag?: number): Complex;
-  public static cot (z: Complex | number, imag?: number): Complex {
-    return cotImpl(Complex, z, imag);
+  public static atan (z: Complex | number): Complex;
+  public static atan (real: number, imag?: number): Complex;
+  public static atan (z: Complex | number, imag?: number): Complex {
+    return atanImpl(Complex, z, imag);
   }
 
   public static cosh (z: Complex | number): Complex;
@@ -248,22 +296,22 @@ export default class Complex {
     return tanhImpl(Complex, z, imag);
   }
 
-  public static sech (z: Complex | number): Complex;
-  public static sech (real: number, imag?: number): Complex;
-  public static sech (z: Complex | number, imag?: number): Complex {
-    return sechImpl(Complex, z, imag);
+  public static acosh (z: Complex | number): Complex;
+  public static acosh (real: number, imag?: number): Complex;
+  public static acosh (z: Complex | number, imag?: number): Complex {
+    return acoshImpl(Complex, z, imag);
   }
 
-  public static csch (z: Complex | number): Complex;
-  public static csch (real: number, imag?: number): Complex;
-  public static csch (z: Complex | number, imag?: number): Complex {
-    return cschImpl(Complex, z, imag);
+  public static asinh (z: Complex | number): Complex;
+  public static asinh (real: number, imag?: number): Complex;
+  public static asinh (z: Complex | number, imag?: number): Complex {
+    return asinhImpl(Complex, z, imag);
   }
 
-  public static coth (z: Complex | number): Complex;
-  public static coth (real: number, imag?: number): Complex;
-  public static coth (z: Complex | number, imag?: number): Complex {
-    return cothImpl(Complex, z, imag);
+  public static atanh (z: Complex | number): Complex;
+  public static atanh (real: number, imag?: number): Complex;
+  public static atanh (z: Complex | number, imag?: number): Complex {
+    return atanhImpl(Complex, z, imag);
   }
 
   public toString (format?: string): string {

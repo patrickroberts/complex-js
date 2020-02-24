@@ -17,13 +17,13 @@ interface Format {
   plus: boolean;
   minus: boolean;
   width: number;
-  precision: number;
+  precision: number | '';
   radix: Radix;
   specifier: Specifier;
 }
 
 const fmtCoord = /%([cp])/g;
-const fmtParts = /%([#0+-]{,4})(\d{,2})((?:\.\d{,2})?)([Xxob]?)([rima])/g;
+const fmtParts = /%([#0+-]{0,4})(\d{0,2})((?:\.\d{0,2})?)([Xxob]?)([rima])/g;
 
 export default function toString (z: Complex, format = '%c'): string {
   return format
@@ -46,7 +46,7 @@ function replaceParts (z: Complex): (...args: string[]) => string {
       plus: flag.includes('+'),
       minus: flag.includes('-'),
       width: +width,
-      precision: +precision.slice(1),
+      precision: precision && +precision.slice(1),
       radix: radix as Radix,
       specifier: specifier as Specifier
     });
@@ -78,6 +78,8 @@ function stringify (z: Complex, format: Format): string {
   function precision (str: string): string {
     const target = format.precision;
     const index = str.indexOf('.') + 1;
+
+    if (target === '') return str;
 
     if (index === 0) {
       if (target === 0) return str;

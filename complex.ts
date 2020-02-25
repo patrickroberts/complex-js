@@ -37,6 +37,7 @@ import acoshImpl from './functions/acosh';
 import asinhImpl from './functions/asinh';
 import atanhImpl from './functions/atanh';
 import toStringImpl from './methods/toString';
+import equalsImpl from './methods/equals';
 import addImpl from './methods/add';
 import subImpl from './methods/sub';
 import mulImpl from './methods/mul';
@@ -318,6 +319,12 @@ export default class Complex {
     return toStringImpl(this, format);
   }
 
+  public equals (rhs: Complex | number): boolean;
+  public equals (real: number, imag?: number): boolean;
+  public equals (rhs: Complex | number, imag?: number): boolean {
+    return equalsImpl(this, rhs, imag);
+  }
+
   public add (rhs: Complex | number): Complex;
   public add (real: number, imag?: number): Complex;
   public add (rhs: Complex | number, imag?: number): Complex {
@@ -351,10 +358,10 @@ export default class Complex {
     return mulImpl(Complex, this, rhs, imag);
   }
 
-  public div (divisor: Complex | number): Complex;
+  public div (rhs: Complex | number): Complex;
   public div (real: number, imag?: number): Complex;
-  public div (divisor: Complex | number, imag?: number): Complex {
-    return divImpl(Complex, this, divisor, imag);
+  public div (rhs: Complex | number, imag?: number): Complex {
+    return divImpl(Complex, this, rhs, imag);
   }
   public '/' (rhs: Complex | number): Complex;
   public '/' (real: number, imag?: number): Complex;

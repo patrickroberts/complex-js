@@ -4,10 +4,10 @@ import div from './div';
 import mul from './mul';
 import sub from './sub';
 
-export default function mod<T extends Complex> (Complex: ComplexConstructor<T>, dividend: Complex, divisor: Complex | number, imag: number = 0): T {
-  // dividend % divisor = dividend - (trunc(dividend / divisor) * divisor)
-  const q = div(Complex, dividend, divisor, imag);
-  const p = mul(Complex, trunc(Complex, q), divisor, imag);
+export default function mod<T extends Complex> (Complex: ComplexConstructor<T>, lhs: Complex, rhs: Complex | number, imag: number = 0): T {
+  // lhs % rhs = lhs - (trunc(lhs / rhs) * rhs)
+  const q = div(Complex, lhs, rhs, imag);
+  const p = mul(Complex, trunc(Complex, q), rhs, imag);
 
-  return sub(Complex, dividend, p);
+  return sub(Complex, lhs, p);
 }

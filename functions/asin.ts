@@ -1,8 +1,8 @@
 import { Complex, ComplexConstructor } from '../internal/complex';
 import from from './from';
 import log from './log';
-import square from './square';
 import sqrt from './sqrt';
+import square from './square';
 import add from '../methods/add';
 import sub from '../methods/sub';
 import mul from '../methods/mul';

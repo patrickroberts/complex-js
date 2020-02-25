@@ -9,31 +9,31 @@ import from from '../functions/from';
 import square from '../functions/square';
 import cube from '../functions/cube';
 
-export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, w: Complex, z: Complex | number, imag: number = 0): T {
-  // z = c + di
+export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, lhs: Complex, rhs: Complex | number, imag: number = 0): T {
+  // rhs = c + di
   let c: number; let d: number;
-  
-  if (typeof z === 'number') {
-    c = z; d = imag;
+
+  if (typeof rhs === 'number') {
+    c = rhs; d = imag;
   } else {
-    c = getReal(z); d = getImag(z);
+    c = getReal(rhs); d = getImag(rhs);
   }
 
   if (d === 0) {
     switch (c) {
-      case -1: return div(Complex, from(Complex, 1), w);
+      case -1: return div(Complex, from(Complex, 1), lhs);
       case 0: return from(Complex, 1);
-      case 1: return new Complex(w._real, w._imag, w._abs, w._arg, w._mask);
-      case 2: return square(Complex, w);
-      case 3: return cube(Complex, w);
+      case 1: return from(Complex, lhs);
+      case 2: return square(Complex, lhs);
+      case 3: return cube(Complex, lhs);
     }
   }
 
-  // w = r e ** ia
-  const r = getAbs(w);
-  const a = getArg(w);
+  // lhs = r e ** ia
+  const r = getAbs(lhs);
+  const a = getArg(lhs);
 
-  // w ** z === (r ** c * e ** -ad) e ** i(d ln(r) + ac)
+  // lhs ** rhs === (r ** c * e ** -ad) e ** i(d ln(r) + ac)
   // from https://en.wikipedia.org/wiki/Exponentiation#Computing_complex_powers
   const abs = Math.pow(r, c) * Math.exp(-a * d);
   const arg = d * Math.log(r) + a * c;

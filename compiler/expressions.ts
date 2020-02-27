@@ -26,10 +26,10 @@ export type Expression = <T extends IComplex>(Complex: IComplexConstructor<T>) =
 
 export const literal = (data: unknown[]): Expression => {
   const [numericLiteral] = data;
-  const { text } = numericLiteral as { text: string };
 
   return <T extends IComplex>(Complex: IComplexConstructor<T>): Constant<T> => {
-    const z = from(Complex, Number(text));
+    const z = from(Complex, Number(numericLiteral));
+
     return (): T => z;
   };
 };

@@ -21,7 +21,7 @@ const lexer = moo.compile({
   OctalIntegerLiteral: /0[Oo][0-7]+/,
   HexIntegerLiteral: /0[Xx][\dA-Fa-f]+/,
   // include update punctuators ++ and -- to enforce whitespace between sequential + and - punctuators
-  Punctuator: ['(', ')', '[', ']', '.', ',', '+', '-', '*', '%', '**', '++', '--', '<<', '>>', '>>>', '&', '|', '^', '~'],
+  Punctuator: ['(', ')', '[', ']', '.', ',', '+', '-', '*', '/', '%', '**', '++', '--', '<<', '>>', '>>>', '&', '|', '^', '~'],
 });
 
 // use interface declaration merging to resolve type mismatch between nearley NearleyToken and moo Token

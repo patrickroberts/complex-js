@@ -4,7 +4,7 @@ import mask from '../internal/mask';
 import getAbs from '../methods/getAbs';
 
 export default function abs<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
-  const zAbs: number = typeof z === 'number'
+  const zAbs = typeof z === 'number'
     ? absImpl(z, i)
     : getAbs(z);
 

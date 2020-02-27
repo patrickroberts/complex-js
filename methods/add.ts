@@ -4,7 +4,8 @@ import getImag from './getImag';
 import getReal from './getReal';
 
 export default function add<T extends IComplex> (Complex: IComplexConstructor<T>, lhs: IComplex, r: IComplex | number, i = 0): T {
-  let rhsReal: number; let rhsImag: number;
+  let rhsReal: number;
+  let rhsImag: number;
 
   if (typeof r === 'number') {
     rhsReal = r;

@@ -4,7 +4,7 @@ import realImpl from '../internal/realImpl';
 import getReal from '../methods/getReal';
 
 export default function real<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
-  const zReal: number = typeof z === 'number'
+  const zReal = typeof z === 'number'
     ? realImpl(z, i)
     : getReal(z);
 

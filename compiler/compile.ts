@@ -9,5 +9,11 @@ export default function compile<T extends IComplex, U extends any[]>(
 ): (...args: U) => T {
   const variable = generate(Complex, text);
 
-  return (...args): T => variable(reviver?.(...args) ?? {});
+  if (reviver) {
+    return (...args): T => variable(reviver(...args));
+  }
+
+  const z = variable({});
+
+  return () => z;
 }

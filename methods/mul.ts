@@ -6,8 +6,8 @@ import getImag from './getImag';
 import getReal from './getReal';
 
 export default function mul<T extends IComplex> (Complex: IComplexConstructor<T>, lhs: IComplex, r: IComplex | number, i = 0): T {
-  const rhs: IComplex = typeof r === 'number'
-    ?  new Complex(r, i, NaN, NaN, mask.HAS_CARTESIAN)
+  const rhs = typeof r === 'number'
+    ? new Complex(r, i, NaN, NaN, mask.HAS_CARTESIAN)
     : r;
 
   const _mask = lhs._mask & rhs._mask;

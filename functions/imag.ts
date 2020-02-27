@@ -4,7 +4,7 @@ import mask from '../internal/mask';
 import getImag from '../methods/getImag';
 
 export default function imag<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
-  const zImag: number = typeof z === 'number'
+  const zImag = typeof z === 'number'
     ? imagImpl(z, i)
     : getImag(z);
 

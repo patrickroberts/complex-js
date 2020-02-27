@@ -72,7 +72,7 @@ export const call = (data: unknown[]): Expression => {
     throwInvalidCallExpression(text);
   }
 
-  return <T extends IComplex>(Complex: IComplexConstructor<T>): Variable<T> => {
+  return <T extends IComplex>(Complex: IComplexConstructor<T>) => {
     const fn = callLookup[text] as (Complex: IComplexConstructor<T>, ...args: T[]) => T;
     const variables = (expressions as Expression[]).map(expression => expression(Complex));
 
@@ -85,10 +85,10 @@ export const call = (data: unknown[]): Expression => {
       );
       const z = fn(...args);
 
-      return (): T => z;
+      return () => z;
     }
 
-    return (context: IContext<T>): T => {
+    return (context: IContext<T>) => {
       const args = concat(
         Complex,
         variables.map(
@@ -104,34 +104,34 @@ export const call = (data: unknown[]): Expression => {
 export const unary = (data: unknown[]): Expression => {
   const [punctuator, , expression] = data;
 
-  return <T extends IComplex>(Complex: IComplexConstructor<T>): Variable<T> => {
+  return Complex => {
     const fn = unaryLookup[punctuator as keyof Unary];
-    const variable: Variable<T> = (expression as Expression)(Complex);
+    const variable = (expression as Expression)(Complex);
 
     if (isConstant(variable)) {
       const z = fn(Complex, variable());
 
-      return (): T => z;
+      return () => z;
     }
 
-    return (context: IContext<T>): T => fn(Complex, variable(context));
+    return context => fn(Complex, variable(context));
   };
 };
 
 export const binary = (data: unknown[]): Expression => {
   const [lhsExpression, , punctuator, , rhsExpression] = data;
 
-  return <T extends IComplex>(Complex: IComplexConstructor<T>): Variable<T> => {
+  return Complex => {
     const fn = binaryLookup[punctuator as keyof Binary];
-    const lhs: Variable<T> = (lhsExpression as Expression)(Complex);
-    const rhs: Variable<T> = (rhsExpression as Expression)(Complex);
+    const lhs = (lhsExpression as Expression)(Complex);
+    const rhs = (rhsExpression as Expression)(Complex);
 
     if (isConstant(lhs) && isConstant(rhs)) {
       const z = fn(Complex, lhs(), rhs());
 
-      return (): T => z;
+      return () => z;
     }
 
-    return (context: IContext<T>): T => fn(Complex, lhs(context), rhs(context));
+    return context => fn(Complex, lhs(context), rhs(context));
   };
 };

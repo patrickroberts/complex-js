@@ -4,7 +4,7 @@ import mask from '../internal/mask';
 import getArg from '../methods/getArg';
 
 export default function arg<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
-  const zArg: number = typeof z === 'number'
+  const zArg = typeof z === 'number'
     ? argImpl(z, i)
     : getArg(z);
 

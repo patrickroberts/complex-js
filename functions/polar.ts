@@ -1,14 +1,17 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
 
-export default function polar<T extends Complex> (Complex: ComplexConstructor<T>, abs: number, arg: number = 0): T {
-  let zAbs: number, zArg: number;
+export default function polar<T extends IComplex> (Complex: IComplexConstructor<T>, abs: number, arg = 0): T {
+  let zAbs: number;
+  let zArg: number;
 
   if (abs < 0) {
-    zAbs = -abs; zArg = arg + Math.PI;
+    zAbs = -abs;
+    zArg = arg + Math.PI;
   } else {
-    zAbs = abs; zArg = arg;
+    zAbs = abs;
+    zArg = arg;
   }
 
-  return new Complex(NaN, NaN, zAbs, zArg, Mask.HAS_POLAR);
+  return new Complex(NaN, NaN, zAbs, zArg, mask.HAS_POLAR);
 }

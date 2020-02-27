@@ -1,6 +1,6 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
 
-export default function random<T extends Complex> (Complex: ComplexConstructor<T>): T {
-  return new Complex(Math.random(), Math.random(), NaN, NaN, Mask.HAS_CARTESIAN);
+export default function random<T extends IComplex> (Complex: IComplexConstructor<T>): T {
+  return new Complex(Math.random(), Math.random(), NaN, NaN, mask.HAS_CARTESIAN);
 }

@@ -1,100 +1,65 @@
-import Mask from './internal/mask';
-import getRealImpl from './methods/real';
-import getImagImpl from './methods/imag';
-import getAbsImpl from './methods/abs';
-import getArgImpl from './methods/arg';
-import fromImpl from './functions/from';
-import polarImpl from './functions/polar';
-import realImpl from './functions/real';
-import imagImpl from './functions/imag';
-import absImpl from './functions/abs';
-import argImpl from './functions/arg';
-import negImpl from './functions/neg';
-import conjImpl from './functions/conj';
-import signImpl from './functions/sign';
-import ceilImpl from './functions/ceil';
-import floorImpl from './functions/floor';
-import roundImpl from './functions/round';
-import truncImpl from './functions/trunc';
-import notImpl from './functions/not';
-import randomImpl from './functions/random';
-import sqrtImpl from './functions/sqrt';
-import cbrtImpl from './functions/cbrt';
-import squareImpl from './functions/square';
-import cubeImpl from './functions/cube';
-import expImpl from './functions/exp';
-import logImpl from './functions/log';
-import cosImpl from './functions/cos';
-import sinImpl from './functions/sin';
-import tanImpl from './functions/tan';
-import acosImpl from './functions/acos';
-import asinImpl from './functions/asin';
-import atanImpl from './functions/atan';
-import coshImpl from './functions/cosh';
-import sinhImpl from './functions/sinh';
-import tanhImpl from './functions/tanh';
-import acoshImpl from './functions/acosh';
-import asinhImpl from './functions/asinh';
-import atanhImpl from './functions/atanh';
-import toStringImpl from './methods/toString';
-import equalsImpl from './methods/equals';
-import addImpl from './methods/add';
-import subImpl from './methods/sub';
-import mulImpl from './methods/mul';
-import divImpl from './methods/div';
-import modImpl from './methods/mod';
-import powImpl from './methods/pow';
-import andImpl from './methods/and';
-import orImpl from './methods/or';
-import xorImpl from './methods/xor';
-import salImpl from './methods/sal';
-import sarImpl from './methods/sar';
-import shrImpl from './methods/shr';
+import compile from './compiler/compile';
+import parse from './compiler/parse';
+import abs from './functions/abs';
+import acos from './functions/acos';
+import acosh from './functions/acosh';
+import arg from './functions/arg';
+import asin from './functions/asin';
+import asinh from './functions/asinh';
+import atan from './functions/atan';
+import atanh from './functions/atanh';
+import cbrt from './functions/cbrt';
+import ceil from './functions/ceil';
+import conj from './functions/conj';
+import cos from './functions/cos';
+import cosh from './functions/cosh';
+import cube from './functions/cube';
+import exp from './functions/exp';
+import floor from './functions/floor';
+import from from './functions/from';
+import imag from './functions/imag';
+import log from './functions/log';
+import neg from './functions/neg';
+import not from './functions/not';
+import polar from './functions/polar';
+import random from './functions/random';
+import real from './functions/real';
+import round from './functions/round';
+import sign from './functions/sign';
+import sin from './functions/sin';
+import sinh from './functions/sinh';
+import sqrt from './functions/sqrt';
+import square from './functions/square';
+import tan from './functions/tan';
+import tanh from './functions/tanh';
+import trunc from './functions/trunc';
+import mask from './internal/mask';
+import add from './methods/add';
+import and from './methods/and';
+import div from './methods/div';
+import equals from './methods/equals';
+import getAbs from './methods/getAbs';
+import getArg from './methods/getArg';
+import getImag from './methods/getImag';
+import getReal from './methods/getReal';
+import mod from './methods/mod';
+import mul from './methods/mul';
+import or from './methods/or';
+import pow from './methods/pow';
+import sal from './methods/sal';
+import sar from './methods/sar';
+import shr from './methods/shr';
+import sub from './methods/sub';
+import toString from './methods/toString';
+import xor from './methods/xor';
+
+export interface IContext {
+  [identifierName: string]: Complex;
+}
+
+export type IReviver<T extends any[]> = (...args: T) => IContext;
 
 export default class Complex {
-  /** @internal */
-  public constructor (real: number, imag: number, abs: number, arg: number, mask: Mask) {
-    // coerce -0 to +0
-    if (mask & Mask.HAS_REAL) real += 0;
-    if (mask & Mask.HAS_IMAG) imag += 0;
-    if (mask & Mask.HAS_ABS) abs += 0;
-    // choose branch cut as the interval (-pi, pi]
-    if (mask & Mask.HAS_ARG) arg = Math.PI - ((Math.PI - arg) % (Math.PI * 2));
-
-    this._real = real;
-    this._imag = imag;
-    this._abs = abs;
-    this._arg = arg;
-    this._mask = mask;
-  }
-
-  /** @internal */
-  public _real: number;
-  /** @internal */
-  public _imag: number;
-  /** @internal */
-  public _abs: number;
-  /** @internal */
-  public _arg: number;
-  /** @internal */
-  public _mask: Mask;
-
-  public get real (): number {
-    return getRealImpl(this);
-  }
-
-  public get imag (): number {
-    return getImagImpl(this);
-  }
-
-  public get abs (): number {
-    return getAbsImpl(this);
-  }
-
-  public get arg (): number {
-    return getArgImpl(this);
-  }
-
   public static readonly '0' = Complex.from(0);
   public static readonly '1' = Complex.from(1);
   public static readonly 'I' = Complex.from(0, 1);
@@ -107,358 +72,348 @@ export default class Complex {
   public static readonly 'SQRT1_2' = Complex.from(Math.SQRT1_2);
   public static readonly 'SQRT2' = Complex.from(Math.SQRT2);
 
-  public static from (real: number, imag?: number): Complex;
+  public static from (r: number, i?: number): Complex;
   public static from (z: Complex | number): Complex;
-  public static from (z: Complex | number, imag?: number): Complex {
-    return fromImpl(Complex, z, imag);
+  public static from (z: Complex | number, i?: number): Complex {
+    return from(Complex, z, i);
   }
 
-  public static cartesian (real: number, imag: number = 0): Complex {
-    return new Complex(real, imag, NaN, NaN, Mask.HAS_CARTESIAN);
+  public static cartesian (r: number, i = 0): Complex {
+    return new Complex(r, i, NaN, NaN, mask.HAS_CARTESIAN);
   }
 
   public static polar (abs: number, arg?: number): Complex {
-    return polarImpl(Complex, abs, arg);
+    return polar(Complex, abs, arg);
   }
 
   public static real (z: Complex | number): Complex;
-  public static real (real: number, imag?: number): Complex;
-  public static real (z: Complex | number, imag?: number): Complex {
-    return realImpl(Complex, z, imag);
+  public static real (r: number, i?: number): Complex;
+  public static real (z: Complex | number, i?: number): Complex {
+    return real(Complex, z, i);
   }
 
   public static imag (z: Complex | number): Complex;
-  public static imag (real: number, imag?: number): Complex;
-  public static imag (z: Complex | number, imag?: number): Complex {
-    return imagImpl(Complex, z, imag);
+  public static imag (r: number, i?: number): Complex;
+  public static imag (z: Complex | number, i?: number): Complex {
+    return imag(Complex, z, i);
   }
 
   public static abs (z: Complex | number): Complex;
-  public static abs (real: number, imag?: number): Complex;
-  public static abs (z: Complex | number, imag?: number): Complex {
-    return absImpl(Complex, z, imag);
+  public static abs (r: number, i?: number): Complex;
+  public static abs (z: Complex | number, i?: number): Complex {
+    return abs(Complex, z, i);
   }
 
   public static arg (z: Complex | number): Complex;
-  public static arg (real: number, imag?: number): Complex;
-  public static arg (z: Complex | number, imag?: number): Complex {
-    return argImpl(Complex, z, imag);
+  public static arg (r: number, i?: number): Complex;
+  public static arg (z: Complex | number, i?: number): Complex {
+    return arg(Complex, z, i);
   }
 
   public static neg (z: Complex | number): Complex;
-  public static neg (real: number, imag?: number): Complex;
-  public static neg (z: Complex | number, imag?: number): Complex {
-    return negImpl(Complex, z, imag);
-  }
-  public static '-' (z: Complex | number): Complex;
-  public static '-' (real: number, imag?: number): Complex;
-  public static '-' (z: Complex | number, imag?: number): Complex {
-    return negImpl(Complex, z, imag);
+  public static neg (r: number, i?: number): Complex;
+  public static neg (z: Complex | number, i?: number): Complex {
+    return neg(Complex, z, i);
   }
 
   public static conj (z: Complex | number): Complex;
-  public static conj (real: number, imag?: number): Complex;
-  public static conj (z: Complex | number, imag?: number): Complex {
-    return conjImpl(Complex, z, imag);
+  public static conj (r: number, i?: number): Complex;
+  public static conj (z: Complex | number, i?: number): Complex {
+    return conj(Complex, z, i);
   }
 
   public static floor (z: Complex | number): Complex;
-  public static floor (real: number, imag?: number): Complex;
-  public static floor (z: Complex | number, imag?: number): Complex {
-    return floorImpl(Complex, z, imag);
+  public static floor (r: number, i?: number): Complex;
+  public static floor (z: Complex | number, i?: number): Complex {
+    return floor(Complex, z, i);
   }
 
   public static ceil (z: Complex | number): Complex;
-  public static ceil (real: number, imag?: number): Complex;
-  public static ceil (z: Complex | number, imag?: number): Complex {
-    return ceilImpl(Complex, z, imag);
+  public static ceil (r: number, i?: number): Complex;
+  public static ceil (z: Complex | number, i?: number): Complex {
+    return ceil(Complex, z, i);
   }
 
   public static round (z: Complex | number): Complex;
-  public static round (real: number, imag?: number): Complex;
-  public static round (z: Complex | number, imag?: number): Complex {
-    return roundImpl(Complex, z, imag);
+  public static round (r: number, i?: number): Complex;
+  public static round (z: Complex | number, i?: number): Complex {
+    return round(Complex, z, i);
   }
 
   public static sign (z: Complex | number): Complex;
-  public static sign (real: number, imag?: number): Complex;
-  public static sign (z: Complex | number, imag?: number): Complex {
-    return signImpl(Complex, z, imag);
+  public static sign (r: number, i?: number): Complex;
+  public static sign (z: Complex | number, i?: number): Complex {
+    return sign(Complex, z, i);
   }
 
   public static trunc (z: Complex | number): Complex;
-  public static trunc (real: number, imag?: number): Complex;
-  public static trunc (z: Complex | number, imag?: number): Complex {
-    return truncImpl(Complex, z, imag);
+  public static trunc (r: number, i?: number): Complex;
+  public static trunc (z: Complex | number, i?: number): Complex {
+    return trunc(Complex, z, i);
   }
 
   public static not (z: Complex | number): Complex;
-  public static not (real: number, imag?: number): Complex;
-  public static not (z: Complex | number, imag?: number): Complex {
-    return notImpl(Complex, z, imag);
-  }
-  public static '~' (z: Complex | number): Complex;
-  public static '~' (real: number, imag?: number): Complex;
-  public static '~' (z: Complex | number, imag?: number): Complex {
-    return notImpl(Complex, z, imag);
+  public static not (r: number, i?: number): Complex;
+  public static not (z: Complex | number, i?: number): Complex {
+    return not(Complex, z, i);
   }
 
   public static random (): Complex {
-    return randomImpl(Complex);
+    return random(Complex);
   }
 
   public static sqrt (z: Complex | number): Complex;
-  public static sqrt (real: number, imag?: number): Complex;
-  public static sqrt (z: Complex | number, imag?: number): Complex {
-    return sqrtImpl(Complex, z, imag);
+  public static sqrt (r: number, i?: number): Complex;
+  public static sqrt (z: Complex | number, i?: number): Complex {
+    return sqrt(Complex, z, i);
   }
 
   public static cbrt (z: Complex | number): Complex;
-  public static cbrt (real: number, imag?: number): Complex;
-  public static cbrt (z: Complex | number, imag?: number): Complex {
-    return cbrtImpl(Complex, z, imag);
+  public static cbrt (r: number, i?: number): Complex;
+  public static cbrt (z: Complex | number, i?: number): Complex {
+    return cbrt(Complex, z, i);
   }
 
   public static square (z: Complex | number): Complex;
-  public static square (real: number, imag?: number): Complex;
-  public static square (z: Complex | number, imag?: number): Complex {
-    return squareImpl(Complex, z, imag);
+  public static square (r: number, i?: number): Complex;
+  public static square (z: Complex | number, i?: number): Complex {
+    return square(Complex, z, i);
   }
 
   public static cube (z: Complex | number): Complex;
-  public static cube (real: number, imag?: number): Complex;
-  public static cube (z: Complex | number, imag?: number): Complex {
-    return cubeImpl(Complex, z, imag);
+  public static cube (r: number, i?: number): Complex;
+  public static cube (z: Complex | number, i?: number): Complex {
+    return cube(Complex, z, i);
   }
 
   public static exp (z: Complex | number): Complex;
-  public static exp (real: number, imag?: number): Complex;
-  public static exp (z: Complex | number, imag?: number): Complex {
-    return expImpl(Complex, z, imag);
+  public static exp (r: number, i?: number): Complex;
+  public static exp (z: Complex | number, i?: number): Complex {
+    return exp(Complex, z, i);
   }
 
   public static log (z: Complex | number): Complex;
-  public static log (real: number, imag?: number): Complex;
-  public static log (z: Complex | number, imag?: number): Complex {
-    return logImpl(Complex, z, imag);
+  public static log (r: number, i?: number): Complex;
+  public static log (z: Complex | number, i?: number): Complex {
+    return log(Complex, z, i);
   }
 
   public static cos (z: Complex | number): Complex;
-  public static cos (real: number, imag?: number): Complex;
-  public static cos (z: Complex | number, imag?: number): Complex {
-    return cosImpl(Complex, z, imag);
+  public static cos (r: number, i?: number): Complex;
+  public static cos (z: Complex | number, i?: number): Complex {
+    return cos(Complex, z, i);
   }
 
   public static sin (z: Complex | number): Complex;
-  public static sin (real: number, imag?: number): Complex;
-  public static sin (z: Complex | number, imag?: number): Complex {
-    return sinImpl(Complex, z, imag);
+  public static sin (r: number, i?: number): Complex;
+  public static sin (z: Complex | number, i?: number): Complex {
+    return sin(Complex, z, i);
   }
 
   public static tan (z: Complex | number): Complex;
-  public static tan (real: number, imag?: number): Complex;
-  public static tan (z: Complex | number, imag?: number): Complex {
-    return tanImpl(Complex, z, imag);
+  public static tan (r: number, i?: number): Complex;
+  public static tan (z: Complex | number, i?: number): Complex {
+    return tan(Complex, z, i);
   }
 
   public static acos (z: Complex | number): Complex;
-  public static acos (real: number, imag?: number): Complex;
-  public static acos (z: Complex | number, imag?: number): Complex {
-    return acosImpl(Complex, z, imag);
+  public static acos (r: number, i?: number): Complex;
+  public static acos (z: Complex | number, i?: number): Complex {
+    return acos(Complex, z, i);
   }
 
   public static asin (z: Complex | number): Complex;
-  public static asin (real: number, imag?: number): Complex;
-  public static asin (z: Complex | number, imag?: number): Complex {
-    return asinImpl(Complex, z, imag);
+  public static asin (r: number, i?: number): Complex;
+  public static asin (z: Complex | number, i?: number): Complex {
+    return asin(Complex, z, i);
   }
 
   public static atan (z: Complex | number): Complex;
-  public static atan (real: number, imag?: number): Complex;
-  public static atan (z: Complex | number, imag?: number): Complex {
-    return atanImpl(Complex, z, imag);
+  public static atan (r: number, i?: number): Complex;
+  public static atan (z: Complex | number, i?: number): Complex {
+    return atan(Complex, z, i);
   }
 
   public static cosh (z: Complex | number): Complex;
-  public static cosh (real: number, imag?: number): Complex;
-  public static cosh (z: Complex | number, imag?: number): Complex {
-    return coshImpl(Complex, z, imag);
+  public static cosh (r: number, i?: number): Complex;
+  public static cosh (z: Complex | number, i?: number): Complex {
+    return cosh(Complex, z, i);
   }
 
   public static sinh (z: Complex | number): Complex;
-  public static sinh (real: number, imag?: number): Complex;
-  public static sinh (z: Complex | number, imag?: number): Complex {
-    return sinhImpl(Complex, z, imag);
+  public static sinh (r: number, i?: number): Complex;
+  public static sinh (z: Complex | number, i?: number): Complex {
+    return sinh(Complex, z, i);
   }
 
   public static tanh (z: Complex | number): Complex;
-  public static tanh (real: number, imag?: number): Complex;
-  public static tanh (z: Complex | number, imag?: number): Complex {
-    return tanhImpl(Complex, z, imag);
+  public static tanh (r: number, i?: number): Complex;
+  public static tanh (z: Complex | number, i?: number): Complex {
+    return tanh(Complex, z, i);
   }
 
   public static acosh (z: Complex | number): Complex;
-  public static acosh (real: number, imag?: number): Complex;
-  public static acosh (z: Complex | number, imag?: number): Complex {
-    return acoshImpl(Complex, z, imag);
+  public static acosh (r: number, i?: number): Complex;
+  public static acosh (z: Complex | number, i?: number): Complex {
+    return acosh(Complex, z, i);
   }
 
   public static asinh (z: Complex | number): Complex;
-  public static asinh (real: number, imag?: number): Complex;
-  public static asinh (z: Complex | number, imag?: number): Complex {
-    return asinhImpl(Complex, z, imag);
+  public static asinh (r: number, i?: number): Complex;
+  public static asinh (z: Complex | number, i?: number): Complex {
+    return asinh(Complex, z, i);
   }
 
   public static atanh (z: Complex | number): Complex;
-  public static atanh (real: number, imag?: number): Complex;
-  public static atanh (z: Complex | number, imag?: number): Complex {
-    return atanhImpl(Complex, z, imag);
+  public static atanh (r: number, i?: number): Complex;
+  public static atanh (z: Complex | number, i?: number): Complex {
+    return atanh(Complex, z, i);
+  }
+
+  public static parse (text: string, context?: IContext): Complex {
+    return parse(Complex, text, context);
+  }
+
+  public static compile (text: string): () => Complex;
+  public static compile<T extends any[]> (text: string, reviver: IReviver<T>): (...args: T) => Complex;
+  public static compile<T extends any[]> (text: string, reviver?: IReviver<T>): (...args: T) => Complex {
+    return compile(Complex, text, reviver);
+  }
+
+  /**
+   * @internal
+   */
+  public _real: number;
+  /**
+   * @internal
+   */
+  public _imag: number;
+  /**
+   * @internal
+   */
+  public _abs: number;
+  /**
+   * @internal
+   */
+  public _arg: number;
+  /**
+   * @internal
+   */
+  public _mask: mask;
+
+  /**
+   * @internal
+   */
+  public constructor (_real: number, _imag: number, _abs: number, _arg: number, _mask: mask) {
+    // coerce -0 to +0
+    this._real = _real + 0;
+    this._imag = _imag + 0;
+    this._abs = _abs + 0;
+    // choose branch cut as the interval (-pi, pi]
+    this._arg = Math.PI - ((Math.PI - _arg) % (Math.PI * 2));
+    this._mask = _mask;
+  }
+
+  public get real (): number {
+    return getReal(this);
+  }
+
+  public get imag (): number {
+    return getImag(this);
+  }
+
+  public get abs (): number {
+    return getAbs(this);
+  }
+
+  public get arg (): number {
+    return getArg(this);
   }
 
   public toString (format?: string): string {
-    return toStringImpl(this, format);
+    return toString(this, format);
   }
 
   public equals (rhs: Complex | number): boolean;
-  public equals (real: number, imag?: number): boolean;
-  public equals (rhs: Complex | number, imag?: number): boolean {
-    return equalsImpl(this, rhs, imag);
+  public equals (r: number, i?: number): boolean;
+  public equals (r: Complex | number, i?: number): boolean {
+    return equals(this, r, i);
   }
 
   public add (rhs: Complex | number): Complex;
-  public add (real: number, imag?: number): Complex;
-  public add (rhs: Complex | number, imag?: number): Complex {
-    return addImpl(Complex, this, rhs, imag);
-  }
-  public '+' (rhs: Complex | number): Complex;
-  public '+' (real: number, imag?: number): Complex;
-  public '+' (rhs: Complex | number, imag?: number): Complex {
-    return addImpl(Complex, this, rhs, imag);
+  public add (r: number, i?: number): Complex;
+  public add (r: Complex | number, i?: number): Complex {
+    return add(Complex, this, r, i);
   }
 
   public sub (rhs: Complex | number): Complex;
-  public sub (real: number, imag?: number): Complex;
-  public sub (rhs: Complex | number, imag?: number): Complex {
-    return subImpl(Complex, this, rhs, imag);
-  }
-  public '-' (rhs: Complex | number): Complex;
-  public '-' (real: number, imag?: number): Complex;
-  public '-' (rhs: Complex | number, imag?: number): Complex {
-    return subImpl(Complex, this, rhs, imag);
+  public sub (r: number, i?: number): Complex;
+  public sub (r: Complex | number, i?: number): Complex {
+    return sub(Complex, this, r, i);
   }
 
   public mul (rhs: Complex | number): Complex;
-  public mul (real: number, imag?: number): Complex;
-  public mul (rhs: Complex | number, imag?: number): Complex {
-    return mulImpl(Complex, this, rhs, imag);
-  }
-  public '*' (rhs: Complex | number): Complex;
-  public '*' (real: number, imag?: number): Complex;
-  public '*' (rhs: Complex | number, imag?: number): Complex {
-    return mulImpl(Complex, this, rhs, imag);
+  public mul (r: number, i?: number): Complex;
+  public mul (r: Complex | number, i?: number): Complex {
+    return mul(Complex, this, r, i);
   }
 
   public div (rhs: Complex | number): Complex;
-  public div (real: number, imag?: number): Complex;
-  public div (rhs: Complex | number, imag?: number): Complex {
-    return divImpl(Complex, this, rhs, imag);
-  }
-  public '/' (rhs: Complex | number): Complex;
-  public '/' (real: number, imag?: number): Complex;
-  public '/' (rhs: Complex | number, imag?: number): Complex {
-    return divImpl(Complex, this, rhs, imag);
+  public div (r: number, i?: number): Complex;
+  public div (r: Complex | number, i?: number): Complex {
+    return div(Complex, this, r, i);
   }
 
   public mod (rhs: Complex | number): Complex;
-  public mod (real: number, imag?: number): Complex;
-  public mod (rhs: Complex | number, imag?: number): Complex {
-    return modImpl(Complex, this, rhs, imag);
-  }
-  public '%' (rhs: Complex | number): Complex;
-  public '%' (real: number, imag?: number): Complex;
-  public '%' (rhs: Complex | number, imag?: number): Complex {
-    return modImpl(Complex, this, rhs, imag);
+  public mod (r: number, i?: number): Complex;
+  public mod (r: Complex | number, i?: number): Complex {
+    return mod(Complex, this, r, i);
   }
 
   public pow (rhs: Complex | number): Complex;
-  public pow (real: number, imag?: number): Complex;
-  public pow (rhs: Complex | number, imag?: number): Complex {
-    return powImpl(Complex, this, rhs, imag);
-  }
-  public '**' (rhs: Complex | number): Complex;
-  public '**' (real: number, imag?: number): Complex;
-  public '**' (rhs: Complex | number, imag?: number): Complex {
-    return powImpl(Complex, this, rhs, imag);
+  public pow (r: number, i?: number): Complex;
+  public pow (r: Complex | number, i?: number): Complex {
+    return pow(Complex, this, r, i);
   }
 
   public and (rhs: Complex | number): Complex;
-  public and (real: number, imag?: number): Complex;
-  public and (rhs: Complex | number, imag?: number): Complex {
-    return andImpl(Complex, this, rhs, imag);
-  }
-  public '&' (rhs: Complex | number): Complex;
-  public '&' (real: number, imag?: number): Complex;
-  public '&' (rhs: Complex | number, imag?: number): Complex {
-    return andImpl(Complex, this, rhs, imag);
+  public and (r: number, i?: number): Complex;
+  public and (r: Complex | number, i?: number): Complex {
+    return and(Complex, this, r, i);
   }
 
   public or (rhs: Complex | number): Complex;
-  public or (real: number, imag?: number): Complex;
-  public or (rhs: Complex | number, imag?: number): Complex {
-    return orImpl(Complex, this, rhs, imag);
-  }
-  public '|' (rhs: Complex | number): Complex;
-  public '|' (real: number, imag?: number): Complex;
-  public '|' (rhs: Complex | number, imag?: number): Complex {
-    return orImpl(Complex, this, rhs, imag);
+  public or (r: number, i?: number): Complex;
+  public or (r: Complex | number, i?: number): Complex {
+    return or(Complex, this, r, i);
   }
 
   public xor (rhs: Complex | number): Complex;
-  public xor (real: number, imag?: number): Complex;
-  public xor (rhs: Complex | number, imag?: number): Complex {
-    return xorImpl(Complex, this, rhs, imag);
-  }
-  public '^' (rhs: Complex | number): Complex;
-  public '^' (real: number, imag?: number): Complex;
-  public '^' (rhs: Complex | number, imag?: number): Complex {
-    return xorImpl(Complex, this, rhs, imag);
+  public xor (r: number, i?: number): Complex;
+  public xor (r: Complex | number, i?: number): Complex {
+    return xor(Complex, this, r, i);
   }
 
   public sal (rhs: Complex | number): Complex;
-  public sal (real: number, imag?: number): Complex;
-  public sal (rhs: Complex | number, imag?: number): Complex {
-    return salImpl(Complex, this, rhs, imag);
+  public sal (r: number, i?: number): Complex;
+  public sal (r: Complex | number, i?: number): Complex {
+    return sal(Complex, this, r, i);
   }
   public shl (rhs: Complex | number): Complex;
-  public shl (real: number, imag?: number): Complex;
-  public shl (rhs: Complex | number, imag?: number): Complex {
-    return salImpl(Complex, this, rhs, imag);
-  }
-  public '<<' (rhs: Complex | number): Complex;
-  public '<<' (real: number, imag?: number): Complex;
-  public '<<' (rhs: Complex | number, imag?: number): Complex {
-    return salImpl(Complex, this, rhs, imag);
+  public shl (r: number, i?: number): Complex;
+  public shl (r: Complex | number, i?: number): Complex {
+    return sal(Complex, this, r, i);
   }
 
   public sar (rhs: Complex | number): Complex;
-  public sar (real: number, imag?: number): Complex;
-  public sar (rhs: Complex | number, imag?: number): Complex {
-    return sarImpl(Complex, this, rhs, imag);
-  }
-  public '>>' (rhs: Complex | number): Complex;
-  public '>>' (real: number, imag?: number): Complex;
-  public '>>' (rhs: Complex | number, imag?: number): Complex {
-    return sarImpl(Complex, this, rhs, imag);
+  public sar (r: number, i?: number): Complex;
+  public sar (r: Complex | number, i?: number): Complex {
+    return sar(Complex, this, r, i);
   }
 
   public shr (rhs: Complex | number): Complex;
-  public shr (real: number, imag?: number): Complex;
-  public shr (rhs: Complex | number, imag?: number): Complex {
-    return shrImpl(Complex, this, rhs, imag);
-  }
-  public '>>>' (rhs: Complex | number): Complex;
-  public '>>>' (real: number, imag?: number): Complex;
-  public '>>>' (rhs: Complex | number, imag?: number): Complex {
-    return shrImpl(Complex, this, rhs, imag);
+  public shr (r: number, i?: number): Complex;
+  public shr (r: Complex | number, i?: number): Complex {
+    return shr(Complex, this, r, i);
   }
 }

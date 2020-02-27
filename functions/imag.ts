@@ -1,22 +1,18 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
-import imagImpl from '../internal/imag';
-import getImag from '../methods/imag';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import imagImpl from '../internal/imagImpl';
+import mask from '../internal/mask';
+import getImag from '../methods/getImag';
 
-export default function imag<T extends Complex>(Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zImag: number;
-
-  if (typeof z === 'number') {
-    zImag = imagImpl(z, imag);
-  } else {
-    zImag = getImag(z);
-  }
+export default function imag<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  const zImag: number = typeof z === 'number'
+    ? imagImpl(z, i)
+    : getImag(z);
 
   return new Complex(
     zImag,
     0,
     Math.abs(zImag),
     zImag < 0 ? Math.PI : 0,
-    Mask.HAS_ALL
+    mask.HAS_ALL
   );
 }

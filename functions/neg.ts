@@ -1,13 +1,25 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
 
-export default function neg<T extends Complex> (Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zReal: number, zImag: number, zAbs: number, zArg: number, zMask: Mask;
+export default function neg<T extends IComplex> (Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  let zReal: number;
+  let zImag: number;
+  let zAbs: number;
+  let zArg: number;
+  let zMask: mask;
 
   if (typeof z === 'number') {
-    zReal = z; zImag = imag; zAbs = NaN; zArg = NaN; zMask = Mask.HAS_CARTESIAN;
+    zReal = z;
+    zImag = i;
+    zAbs = NaN;
+    zArg = NaN;
+    zMask = mask.HAS_CARTESIAN;
   } else {
-    zReal = z._real; zImag = z._imag; zAbs = z._abs; zArg = z._arg; zMask = z._mask;
+    zReal = z._real;
+    zImag = z._imag;
+    zAbs = z._abs;
+    zArg = z._arg;
+    zMask = z._mask;
   }
 
   return new Complex(-zReal, -zImag, zAbs, zArg + Math.PI, zMask);

@@ -1,14 +1,17 @@
-import { Complex } from '../internal/complex';
-import getReal from './real';
-import getImag from './imag';
+import { IComplex } from '../internal/complex';
+import getImag from './getImag';
+import getReal from './getReal';
 
-export default function equals (lhs: Complex, rhs: Complex | number, imag: number = 0): boolean {
-  let rhsReal: number; let rhsImag: number;
-  
-  if (typeof rhs === 'number') {
-    rhsReal = rhs; rhsImag = imag;
+export default function equals (lhs: IComplex, r: IComplex | number, i = 0): boolean {
+  let rhsReal: number;
+  let rhsImag: number;
+
+  if (typeof r === 'number') {
+    rhsReal = r;
+    rhsImag = i;
   } else {
-    rhsReal = getReal(rhs); rhsImag = getImag(rhs);
+    rhsReal = getReal(r);
+    rhsImag = getImag(r);
   }
 
   const lhsReal = getReal(lhs);

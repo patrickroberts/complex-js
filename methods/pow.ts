@@ -1,22 +1,25 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
-import getReal from './real';
-import getImag from './imag';
-import getAbs from './abs';
-import getArg from './arg';
-import div from './div';
+import cube from '../functions/cube';
 import from from '../functions/from';
 import square from '../functions/square';
-import cube from '../functions/cube';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
+import div from './div';
+import getAbs from './getAbs';
+import getArg from './getArg';
+import getImag from './getImag';
+import getReal from './getReal';
 
-export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, lhs: Complex, rhs: Complex | number, imag: number = 0): T {
+export default function pow<T extends IComplex> (Complex: IComplexConstructor<T>, lhs: IComplex, r: IComplex | number, i = 0): T {
   // rhs = c + di
-  let c: number; let d: number;
+  let c: number;
+  let d: number;
 
-  if (typeof rhs === 'number') {
-    c = rhs; d = imag;
+  if (typeof r === 'number') {
+    c = r;
+    d = i;
   } else {
-    c = getReal(rhs); d = getImag(rhs);
+    c = getReal(r);
+    d = getImag(r);
   }
 
   if (d === 0) {
@@ -29,14 +32,14 @@ export default function pow<T extends Complex> (Complex: ComplexConstructor<T>, 
     }
   }
 
-  // lhs = r e ** ia
-  const r = getAbs(lhs);
+  // lhs = m e ** ia
+  const m = getAbs(lhs);
   const a = getArg(lhs);
 
-  // lhs ** rhs === (r ** c * e ** -ad) e ** i(d ln(r) + ac)
+  // lhs ** rhs === (m ** c * e ** -ad) e ** i(d ln(m) + ac)
   // from https://en.wikipedia.org/wiki/Exponentiation#Computing_complex_powers
-  const abs = Math.pow(r, c) * Math.exp(-a * d);
-  const arg = d * Math.log(r) + a * c;
+  const abs = Math.pow(m, c) * Math.exp(-a * d);
+  const arg = d * Math.log(m) + a * c;
 
-  return new Complex(NaN, NaN, abs, arg, Mask.HAS_POLAR);
+  return new Complex(NaN, NaN, abs, arg, mask.HAS_POLAR);
 }

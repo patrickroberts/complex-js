@@ -1,5 +1,5 @@
-/** @internal */
-const enum Mask {
+// @internal
+const enum mask {
   HAS_NONE = 0,
   HAS_REAL = 1,
   HAS_IMAG = HAS_REAL << 1,
@@ -10,4 +10,4 @@ const enum Mask {
   HAS_ALL = HAS_CARTESIAN | HAS_POLAR
 }
 
-export default Mask;
+export default mask;

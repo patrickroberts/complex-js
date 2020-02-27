@@ -1,26 +1,30 @@
 import typescript from '@rollup/plugin-typescript';
+import external from 'rollup-plugin-peer-deps-external';
 import dts from 'rollup-plugin-dts';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const name = 'Complex';
 const input = 'complex.ts';
+const moo = 'moo';
+const nearley = 'nearley';
+const globals = { moo, nearley };
 
 export default [
   {
     input,
     output: { file: pkg.module, format: 'es' },
-    plugins: [typescript()]
+    plugins: [external(), typescript()]
   },
   {
     input,
     output: { file: pkg.main, format: 'commonjs', name },
-    plugins: [typescript({ target: 'es5' })]
+    plugins: [external(), typescript({ target: 'es5' })]
   },
   {
     input,
-    output: { file: pkg.browser, format: 'umd', name, sourcemap: true },
-    plugins: [typescript({ target: 'es5' }), terser()]
+    output: { file: pkg.browser, format: 'umd', name, globals, sourcemap: true },
+    plugins: [external(), typescript({ target: 'es5' }), terser()]
   },
   {
     input,

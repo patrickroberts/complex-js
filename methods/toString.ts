@@ -1,31 +1,27 @@
-import { Complex } from '../internal/complex';
-import getReal from './real';
-import getImag from './imag';
-import getAbs from './abs';
-import getArg from './arg';
+import { IComplex } from '../internal/complex';
+import getAbs from './getAbs';
+import getArg from './getArg';
+import getImag from './getImag';
+import getReal from './getReal';
 
-/** @internal */
 type Coordinates = 'c' | 'p';
-/** @internal */
 type Radix = 'X' | 'x' | 'o' | 'b' | '';
-/** @internal */
 type Specifier = 'r' | 'i' | 'm' | 'a';
-/** @internal */
-interface Format {
-  pound: boolean;
-  zero: boolean;
-  plus: boolean;
+interface IFormat {
   minus: boolean;
-  width: number;
+  plus: boolean;
+  pound: boolean;
   precision: number | '';
   radix: Radix;
   specifier: Specifier;
+  width: number;
+  zero: boolean;
 }
 
 const fmtCoord = /%([cp])/g;
 const fmtParts = /%([#0+-]{0,4})(\d{0,2})((?:\.\d{0,2})?)([Xxob]?)([rima])/g;
 
-export default function toString (z: Complex, format = '%c'): string {
+export default function toString (z: IComplex, format = '%c'): string {
   return format
     .replace(fmtCoord, replaceCoord)
     .replace(fmtParts, replaceParts(z));
@@ -38,22 +34,22 @@ function replaceCoord (_: string, coord: Coordinates): string {
   }
 }
 
-function replaceParts (z: Complex): (...args: string[]) => string {
+function replaceParts (z: IComplex): (...args: string[]) => string {
   return (_, flag, width, precision, radix, specifier) => {
     return stringify(z, {
-      pound: flag.includes('#'),
-      zero: flag.includes('0'),
-      plus: flag.includes('+'),
       minus: flag.includes('-'),
-      width: +width,
+      plus: flag.includes('+'),
+      pound: flag.includes('#'),
       precision: precision && +precision.slice(1),
       radix: radix as Radix,
-      specifier: specifier as Specifier
+      specifier: specifier as Specifier,
+      width: +width,
+      zero: flag.includes('0')
     });
   };
 }
 
-function stringify (z: Complex, format: Format): string {
+function stringify (z: IComplex, format: IFormat): string {
   return width(precision(radix(specifier())));
 
   function specifier (): number {
@@ -84,7 +80,7 @@ function stringify (z: Complex, format: Format): string {
     if (index === 0) {
       if (target === 0) return str;
 
-      return str + '.' + '0'.repeat(target);
+      return `${str}.${'0'.repeat(target)}`;
     }
 
     const digits = str.length - index;
@@ -107,48 +103,52 @@ function stringify (z: Complex, format: Format): string {
       return plus(pound(padLeft(str, format.width, '0')));
     }
 
-    return plus(pound('-' + padLeft(str.slice(1), format.width - 1, '0')));
+    return plus(pound(`-${padLeft(str.slice(1), format.width - 1, '0')}`));
   }
 
   function plus (str: string) {
     if (!format.plus || startsWith(str, '-')) return str;
-    return '+' + str;
+    return `+${str}`;
   }
 
   function pound (str: string): string {
     if (!format.pound || !format.radix) return str;
 
-    const base = '0' + format.radix;
+    const base = `0${format.radix}`;
 
     if (!startsWith(str, '-')) return base + str;
-    return '-' + base + str.slice(1);
+    return `-${base + str.slice(1)}`;
   }
 }
 
 function padLeft (target: string, targetLength: number, padString: string): string {
-  targetLength >>= 0;
-  targetLength -= target.length;
+  const length = (targetLength >> 0) - target.length;
 
-  if (targetLength <= 0) return target;
+  if (length <= 0) return target;
 
-  return padded(targetLength, padString) + target;
+  return padded(length, padString) + target;
 }
 
 function padRight (target: string, targetLength: number, padString: string): string {
-  targetLength >>= 0;
-  targetLength -= target.length;
+  const length = (targetLength >> 0) - target.length;
+  
+  if (length <= 0) return target;
 
-  if (targetLength <= 0) return target;
-
-  return target + padded(targetLength, padString);
+  return target + padded(length, padString);
 }
 
 function padded (targetLength: number, padString: string): string {
-  if (targetLength > padString.length) {
-    padString += padString.repeat(targetLength / padString.length);
+  if (targetLength === padString.length) {
+    return padString;
   }
 
-  return padString.slice(0, targetLength);
+  if (targetLength < padString.length) {
+    return padString.slice(0, targetLength);
+  }
+
+  return padString
+    .repeat(1 + targetLength / padString.length)
+    .slice(0, targetLength);
 }
 
 function startsWith (sourceString: string, searchString: string): boolean {

@@ -1,17 +1,20 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
-import absImpl from '../internal/abs';
-import argImpl from '../internal/arg';
-import getAbs from '../methods/abs';
-import getArg from '../methods/arg';
+import absImpl from '../internal/absImpl';
+import argImpl from '../internal/argImpl';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
+import getAbs from '../methods/getAbs';
+import getArg from '../methods/getArg';
 
-export default function sqrt<T extends Complex> (Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zAbs: number, zArg: number;
+export default function sqrt<T extends IComplex> (Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  let zAbs: number;
+  let zArg: number;
 
   if (typeof z === 'number') {
-    zAbs = absImpl(z, imag); zArg = argImpl(z, imag);
+    zAbs = absImpl(z, i);
+    zArg = argImpl(z, i);
   } else {
-    zAbs = getAbs(z); zArg = getArg(z);
+    zAbs = getAbs(z);
+    zArg = getArg(z);
   }
 
   return new Complex(
@@ -19,6 +22,6 @@ export default function sqrt<T extends Complex> (Complex: ComplexConstructor<T>,
     NaN,
     Math.sqrt(zAbs),
     0.5 * zArg,
-    Mask.HAS_POLAR
+    mask.HAS_POLAR
   );
 }

@@ -1,16 +1,12 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
-import absImpl from '../internal/abs';
-import getAbs from '../methods/abs';
+import absImpl from '../internal/absImpl';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
+import getAbs from '../methods/getAbs';
 
-export default function abs<T extends Complex>(Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zAbs: number;
+export default function abs<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  const zAbs: number = typeof z === 'number'
+    ? absImpl(z, i)
+    : getAbs(z);
 
-  if (typeof z === 'number') {
-    zAbs = absImpl(z, imag);
-  } else {
-    zAbs = getAbs(z);
-  }
-
-  return new Complex(zAbs, 0, zAbs, 0, Mask.HAS_ALL);
+  return new Complex(zAbs, 0, zAbs, 0, mask.HAS_ALL);
 }

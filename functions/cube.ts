@@ -1,20 +1,32 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
 
-export default function cube<T extends Complex> (Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zReal: number, zImag: number, zAbs: number, zArg: number, zMask: Mask;
+export default function cube<T extends IComplex> (Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  let zReal: number;
+  let zImag: number;
+  let zAbs: number;
+  let zArg: number;
+  let zMask: mask;
 
   if (typeof z === 'number') {
-    zReal = z; zImag = imag; zAbs = NaN; zArg = NaN; zMask = Mask.HAS_CARTESIAN;
+    zReal = z;
+    zImag = i;
+    zAbs = NaN;
+    zArg = NaN;
+    zMask = mask.HAS_CARTESIAN;
   } else {
-    zReal = z._real; zImag = z._imag; zAbs = z._abs; zArg = z._arg; zMask = z._mask;
+    zReal = z._real;
+    zImag = z._imag;
+    zAbs = z._abs;
+    zArg = z._arg;
+    zMask = z._mask;
   }
 
   const abs3 = zAbs * zAbs * zAbs;
   const arg3 = zArg * 3;
 
-  if ((zMask & Mask.HAS_CARTESIAN) !== Mask.HAS_CARTESIAN) {
-    return new Complex(NaN, NaN, abs3, arg3, Mask.HAS_POLAR);
+  if ((zMask & mask.HAS_CARTESIAN) !== mask.HAS_CARTESIAN) {
+    return new Complex(NaN, NaN, abs3, arg3, mask.HAS_POLAR);
   }
 
   const real2 = zReal * zReal;

@@ -1,15 +1,11 @@
-import Mask from './mask';
+import mask from './mask';
 
-/** @internal */
-export interface Complex {
+export interface IComplex {
   _real: number;
   _imag: number;
   _arg: number;
   _abs: number;
-  _mask: Mask;
+  _mask: mask;
 }
 
-/** @internal */
-export interface ComplexConstructor<T extends Complex> {
-  new (real: number, imag: number, abs: number, arg: number, mask: Mask): T;
-}
+export type IComplexConstructor<T extends IComplex> = new (real: number, imag: number, abs: number, arg: number, mask: mask) => T;

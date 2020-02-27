@@ -1,22 +1,18 @@
-import { Complex, ComplexConstructor } from '../internal/complex';
-import Mask from '../internal/mask';
-import realImpl from '../internal/real';
-import getReal from '../methods/real';
+import { IComplex, IComplexConstructor } from '../internal/complex';
+import mask from '../internal/mask';
+import realImpl from '../internal/realImpl';
+import getReal from '../methods/getReal';
 
-export default function real<T extends Complex>(Complex: ComplexConstructor<T>, z: Complex | number, imag: number = 0): T {
-  let zReal: number;
-
-  if (typeof z === 'number') {
-    zReal = realImpl(z, imag);
-  } else {
-    zReal = getReal(z);
-  }
+export default function real<T extends IComplex>(Complex: IComplexConstructor<T>, z: IComplex | number, i = 0): T {
+  const zReal: number = typeof z === 'number'
+    ? realImpl(z, i)
+    : getReal(z);
 
   return new Complex(
     zReal,
     0,
     Math.abs(zReal),
     zReal < 0 ? Math.PI : 0,
-    Mask.HAS_ALL
+    mask.HAS_ALL
   );
 }

@@ -4,7 +4,6 @@
 import moo from 'moo';
 import { literal, identifier, call, unary, binary } from './expressions';
 
-const join = (data: any[]) => data.join('');
 const pick = (idx: number) => (data: any[]) => data[idx];
 const empty = () => [];
 const array = (...idx: number[]) => (data: any[]) => idx.map(i => data[i]);
@@ -14,9 +13,7 @@ const dispose = () => null;
 const lexer = moo.compile({
   WhiteSpace: / +/,
   IdentifierName: /[$A-Z_a-z][$\w]*/,
-  DecimalIntegerLiteral: /0|[1-9]\d*/,
-  DecimalDigits: /\d+/,
-  ExponentPart: /[Ee][+-]?\d+/,
+  DecimalLiteral: /(?:0|[1-9]\d*\.?\d*|\.\d+)(?:[Ee][+-]?\d+)?/,
   BinaryIntegerLiteral: /0[Bb][01]+/,
   OctalIntegerLiteral: /0[Oo][0-7]+/,
   HexIntegerLiteral: /0[Xx][\dA-Fa-f]+/,
@@ -104,15 +101,10 @@ PrimaryExpression ->
   | NumericLiteral  {% literal %}
 
 NumericLiteral ->
-    DecimalLiteral        {% id %}
+    %DecimalLiteral       {% id %}
   | %BinaryIntegerLiteral {% id %}
   | %OctalIntegerLiteral  {% id %}
   | %HexIntegerLiteral    {% id %}
-
-DecimalLiteral ->
-    %DecimalIntegerLiteral "." %DecimalDigits:? %ExponentPart:? {% join %}
-  | "." %DecimalDigits %ExponentPart:?                          {% join %}
-  | %DecimalIntegerLiteral %ExponentPart:?                      {% join %}
 
 CallExpression ->
     %IdentifierName _ Arguments {% call %}

@@ -11,7 +11,7 @@
 To install via [`npm`](https://www.npmjs.com/package/complex-js):
 
 ```sh
-npm i complex-js
+npm i complex-js moo nearley # peer dependencies for expression parser
 ```
 
 [Node.js](https://nodejs.org):
@@ -29,7 +29,10 @@ import Complex from 'complex-js';
 Browser:
 
 ```html
-<script src="https://unpkg.com/complex-js"></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/moo@0.5.1,npm/nearley@2.19.1,npm/complex-js"></script>
+<script>
+const { Complex } = window;
+</script>
 ```
 
 [RequireJS](https://requirejs.org/docs/whyamd.html):

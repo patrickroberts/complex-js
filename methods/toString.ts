@@ -29,8 +29,8 @@ export default function toString (z: IComplex, format = '%c'): string {
 
 function replaceCoord (_: string, coord: Coordinates): string {
   switch (coord) {
-    case 'c': return '%r%+ii';
-    case 'p': return '%m*e**(%ai)';
+    case 'c': return '%r%+i*i';
+    case 'p': return '%m*e**(%a*i)';
   }
 }
 
@@ -92,65 +92,39 @@ function stringify (z: IComplex, format: IFormat): string {
 
   function width (str: string): string {
     if (format.minus) {
-      return padRight(plus(pound(str)), format.width, ' ');
+      return plus(pound(str)).padEnd(format.width, ' ');
     }
 
     if (!format.zero) {
-      return padLeft(plus(pound(str)), format.width, ' ');
+      return plus(pound(str)).padStart(format.width, ' ');
     }
 
-    if (!startsWith(str, '-')) {
-      return plus(pound(padLeft(str, format.width, '0')));
+    if (!str.startsWith('-')) {
+      return plus(pound(str.padStart(format.width, '0')));
     }
 
-    return plus(pound(`-${padLeft(str.slice(1), format.width - 1, '0')}`));
+    return plus(pound(`-${str.slice(1).padStart(format.width - 1, '0')}`));
   }
 
   function plus (str: string) {
-    if (!format.plus || startsWith(str, '-')) return str;
+    if (!format.plus || str.startsWith('-')) {
+      return str;
+    }
+
     return `+${str}`;
   }
 
   function pound (str: string): string {
-    if (!format.pound || !format.radix) return str;
+    if (!format.pound || !format.radix) {
+      return str;
+    }
 
     const base = `0${format.radix}`;
 
-    if (!startsWith(str, '-')) return base + str;
+    if (!str.startsWith('-')) {
+      return base + str;
+    }
+
     return `-${base + str.slice(1)}`;
   }
-}
-
-function padLeft (target: string, targetLength: number, padString: string): string {
-  const length = (targetLength >> 0) - target.length;
-
-  if (length <= 0) return target;
-
-  return padded(length, padString) + target;
-}
-
-function padRight (target: string, targetLength: number, padString: string): string {
-  const length = (targetLength >> 0) - target.length;
-  
-  if (length <= 0) return target;
-
-  return target + padded(length, padString);
-}
-
-function padded (targetLength: number, padString: string): string {
-  if (targetLength === padString.length) {
-    return padString;
-  }
-
-  if (targetLength < padString.length) {
-    return padString.slice(0, targetLength);
-  }
-
-  return padString
-    .repeat(1 + targetLength / padString.length)
-    .slice(0, targetLength);
-}
-
-function startsWith (sourceString: string, searchString: string): boolean {
-  return sourceString.slice(0, searchString.length) === searchString;
 }

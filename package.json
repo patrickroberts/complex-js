@@ -18,14 +18,14 @@
     "isomorphic"
   ],
   "scripts": {
+    "clean": "rimraf docs dst compiler/grammar.ts",
     "compile": "nearleyc compiler/grammar.ne -o compiler/grammar.ts",
     "lint": "tslint -p . -e compiler/grammar.ts",
     "bundle": "rollup -c",
-    "docs": "typedoc complex.ts",
-    "build": "npm run compile && npm run lint && npm run bundle && npm run docs",
-    "clean": "rimraf docs dst compiler/grammar.ts",
+    "build": "npm run compile && npm run lint && npm run bundle",
     "rebuild": "npm run clean && npm run build",
-    "prepublishOnly": "npm run rebuild"
+    "docs": "typedoc complex.ts",
+    "prepublishOnly": "npm run rebuild && npm run docs"
   },
   "engines": {
     "node": ">=0.10.0"

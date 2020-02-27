@@ -25,7 +25,7 @@
     "build": "npm run compile && npm run lint && npm run bundle",
     "rebuild": "npm run clean && npm run build",
     "docs": "typedoc complex.ts",
-    "prepublishOnly": "npm run rebuild && npm run docs"
+    "prepublishOnly": "npm un moo nearley && npm run rebuild && npm run docs"
   },
   "engines": {
     "node": ">=0.10.0"

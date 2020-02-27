@@ -1,6 +1,6 @@
 {
   "name": "complex-js",
-  "version": "6.0.1-alpha",
+  "version": "6.0.2-alpha",
   "description": "Complex math for the browser and Node.js",
   "main": "dst/complex.js",
   "module": "dst/complex.mjs",
@@ -51,5 +51,6 @@
   "peerDependencies": {
     "moo": "^0.5.1",
     "nearley": "^2.19.1"
-  }
+  },
+  "dependencies": {}
 }

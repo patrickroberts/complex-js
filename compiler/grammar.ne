@@ -13,7 +13,7 @@ const dispose = () => null;
 const lexer = moo.compile({
   WhiteSpace: / +/,
   IdentifierName: /[$A-Z_a-z][$\w]*/,
-  DecimalLiteral: /(?:0|[1-9]\d*\.?\d*|\.\d+)(?:[Ee][+-]?\d+)?/,
+  DecimalLiteral: /(?:(?:0|[1-9]\d*)\.?\d*|\.\d+)(?:[Ee][+-]?\d+)?/,
   BinaryIntegerLiteral: /0[Bb][01]+/,
   OctalIntegerLiteral: /0[Oo][0-7]+/,
   HexIntegerLiteral: /0[Xx][\dA-Fa-f]+/,

@@ -22,17 +22,18 @@ export default function cube<T extends IComplex> (Complex: IComplexConstructor<T
     zMask = z._mask;
   }
 
-  const abs3 = zAbs * zAbs * zAbs;
-  const arg3 = zArg * 3;
-
   if ((zMask & mask.HAS_CARTESIAN) !== mask.HAS_CARTESIAN) {
-    return new Complex(NaN, NaN, abs3, arg3, mask.HAS_POLAR);
+    return new Complex(NaN, NaN, zAbs * zAbs * zAbs, 3 * zArg, mask.HAS_POLAR);
   }
 
   const real2 = zReal * zReal;
   const imag2 = zImag * zImag;
-  const real3 = (real2 - imag2 * 3) * zReal;
-  const imag3 = (real2 * 3 - imag2) * zImag;
 
-  return new Complex(real3, imag3, arg3, abs3, zMask);
+  return new Complex(
+    (real2 - 3 * imag2) * zReal,
+    (3 * real2 - imag2) * zImag,
+    zAbs * zAbs * zAbs,
+    3 * zArg,
+    zMask
+  );
 }

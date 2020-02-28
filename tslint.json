@@ -11,12 +11,14 @@
   "rules": {
     "array-type": [true, "array"],
     "no-bitwise": false,
+    "no-implicit-dependencies": false,
     "no-shadowed-variable": [
       true,
       {
         "import": false
       }
     ],
+    "no-submodule-imports": false,
     "variable-name": {
       "options": [
         "allow-leading-underscore",

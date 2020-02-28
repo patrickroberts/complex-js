@@ -4,6 +4,7 @@
 
 * [Getting Started](#getting-started)
 * [Documentation](#documentation)
+* [Coverage](#coverage)
 * [License](#license)
 
 ## Getting Started

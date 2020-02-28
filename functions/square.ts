@@ -22,11 +22,18 @@ export default function square<T extends IComplex> (Complex: IComplexConstructor
     zMask = z._mask;
   }
 
+  if ((zMask & mask.HAS_CARTESIAN) !== mask.HAS_CARTESIAN) {
+    return new Complex(NaN, NaN, zAbs * zAbs, 2 * zArg, mask.HAS_POLAR);
+  }
+
   const real2 = zReal * zReal;
   const imag2 = zImag * zImag;
-  const abs2 = zMask & mask.HAS_ABS
-    ? zAbs * zAbs
-    : real2 + imag2;
 
-  return new Complex(real2, imag2, abs2, zArg * 2, zMask | mask.HAS_ABS);
+  return new Complex(
+    real2 - imag2,
+    2 * zReal * zImag,
+    real2 + imag2,
+    2 * zArg,
+    zMask | mask.HAS_ABS
+  );
 }

@@ -1,6 +1,6 @@
 {
   "name": "complex-js",
-  "version": "6.0.2-alpha",
+  "version": "6.0.3-alpha",
   "description": "Complex math for the browser and Node.js",
   "main": "dst/complex.js",
   "module": "dst/complex.mjs",

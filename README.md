@@ -4,7 +4,7 @@
 
 * [Getting Started](#getting-started)
 * [Documentation](#documentation)
-* [Coverage](#coverage)
+* [Code Coverage](#code-coverage)
 * [License](#license)
 
 ## Getting Started
@@ -46,7 +46,11 @@ requirejs(['complex-js'], function (Complex) {
 
 ## Documentation
 
-API reference available on [github.io](http://patrickroberts.github.io/complex-js/).
+API reference available at https://patrickroberts.github.io/complex-js/.
+
+## Code Coverage
+
+Report available at https://patrickroberts.github.io/complex-js/lcov-report/.
 
 ## License
 

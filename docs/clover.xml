@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1582873048040" clover="3.2.0">
-  <project timestamp="1582873048040" name="All files">
+<coverage generated="1582873274245" clover="3.2.0">
+  <project timestamp="1582873274245" name="All files">
     <metrics statements="892" coveredstatements="13" conditionals="308" coveredconditionals="9" methods="153" coveredmethods="3" elements="1353" coveredelements="25" complexity="0" loc="892" ncloc="892" packages="5" files="63" classes="63"/>
     <package name="complex-js">
       <metrics statements="125" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="56" coveredmethods="0"/>

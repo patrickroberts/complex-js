@@ -310,7 +310,8 @@ export default class Complex {
     this._imag = _imag + 0;
     this._abs = _abs + 0;
     // choose branch cut as the interval (-pi, pi]
-    this._arg = Math.PI - ((Math.PI - _arg) % (Math.PI * 2));
+    const d = 2 * Math.PI;
+    this._arg = Math.PI - (3 * Math.PI - _arg % d) % d;
     this._mask = _mask;
   }
 
